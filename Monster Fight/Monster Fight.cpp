@@ -5,8 +5,8 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.12
-// Lines of Code    : 883
+// Version          : 0.14
+// Lines of Code    : 886
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -195,7 +195,7 @@ int main()
 
         //This makes it so most attacks have a 90% chance to hit.
 
-        cout << "Monster Fight Version 0.12 - 883 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.14 - 886 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -232,10 +232,6 @@ int main()
                 int attackChoice{ 0 };
 
                 cout << "\nUse what attack?\n" << endl;
-
-                //ISSUE
-                //Missed Attack is counted as an attack, this should be changed
-                //so that it happens instead of it being an attack.
 
 				for (auto& i : Hero.GetAttackList())
                 {
