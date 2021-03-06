@@ -5,8 +5,8 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.18
-// Lines of Code    : 886
+// Version          : 0.19
+// Lines of Code    : 881
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -107,8 +107,6 @@ int main()
     enemyAttacks.push_back(Slash);
     enemyAttacks.push_back(BodySlam);
 
-	uniform_int_distribution<int> randomEnemyAttacks(0, enemyAttacks.size() - 1);
-
     //============================================
     //CREATE ITEMS AND SET VECTOR
     //============================================
@@ -181,12 +179,9 @@ int main()
         //Choose a random enemy and set it inside vector, if we dont do this
         //A random enemy will be chosen for each call in the fight, we want 
         //the same eney for the duration of the fight.
-        uniform_int_distribution<int> chooseRandomEnemy(0, enemyContainer.size() - 1);
-        Enemy randomEnemy{ enemyContainer[chooseRandomEnemy(generator)] };
+        Enemy randomEnemy{ enemyContainer[RandomNumber(generator, 0, enemyContainer.size() -1)] };
 
-
-		uniform_int_distribution<int> randomItemReward(0, itemList.size() - 1);
-        Item randomItem{ itemList[randomItemReward(generator)] };
+        Item randomItem{ itemList[RandomNumber(generator, 0, itemList.size() -1)] };
    
         //Randomly generate a reward and set it for this fight, then re-randomize it
         //for the next fight.
@@ -195,7 +190,7 @@ int main()
 
         //This makes it so most attacks have a 90% chance to hit.
 
-        cout << "Monster Fight Version 0.18 - 886 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.19 - 881 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -218,7 +213,7 @@ int main()
             while (Hero.GetHealth() > 0)
             {
                 //Re-roll player and enemy attacks and power levels for random attacks and powers.
-                Attack randomEnemyAttack{ enemyAttacks[randomEnemyAttacks(generator)] };
+                Attack randomEnemyAttack{ enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)] };
 
                 cout << "\n################################################################" << endl;
                 cout << "##" << "                     MONSTER FIGHT                          ##" << endl;
