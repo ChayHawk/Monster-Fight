@@ -5,8 +5,8 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.15
-// Lines of Code    : 894
+// Version          : 0.18
+// Lines of Code    : 886
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -54,6 +54,7 @@ using std::make_tuple;
 /*TO DO
 * 1. Add a save and load feature.
 * 2. Allow player to name their character.
+* 3. Do some general cleanup and refactoring of the code base.
 */
 
 //============================================
@@ -194,7 +195,7 @@ int main()
 
         //This makes it so most attacks have a 90% chance to hit.
 
-        cout << "Monster Fight Version 0.15 - 894 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.18 - 886 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
