@@ -5,8 +5,8 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.14
-// Lines of Code    : 886
+// Version          : 0.15
+// Lines of Code    : 894
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -172,7 +172,6 @@ int main()
     int turn{ 1 };
     int totalTurns{ 1 };
     int battles{ 0 };
-    int totalEnemiesDefeated{ 0 };
 
     while (choice != -1)
     {
@@ -195,7 +194,7 @@ int main()
 
         //This makes it so most attacks have a 90% chance to hit.
 
-        cout << "Monster Fight Version 0.14 - 886 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.15 - 894 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -235,7 +234,6 @@ int main()
 
 				for (auto& i : Hero.GetAttackList())
                 {
-
 					cout << counter++ << ") " << i << endl;
                 }
                 cin >> attackChoice;
@@ -275,7 +273,7 @@ int main()
                     Hero.AddItemToInventory(randomItem, RandomNumber(generator, 1, 3));
 
                     battles++;
-                    totalEnemiesDefeated++;
+                    Hero.IncrememntKillCounter();
                     cout << "\n================================================================\n" << endl;
                     break;
                 }
@@ -321,7 +319,7 @@ int main()
 
                 cout << "\nSTATS===================================================================" << endl;
 
-                cout << "\nCurrent Turn: " << turn++ << " | Total Turns: " << totalTurns++ << " | Battles Won: " << battles << " | Enemies Defeated: " << totalEnemiesDefeated << "\n" << endl;
+                cout << "\nCurrent Turn: " << turn++ << " | Total Turns: " << totalTurns++ << " | Battles Won: " << battles << " | Enemies Defeated: " << Hero.GetKillCount() << "\n" << endl;
 
                 cout << Hero.GetName() << '\n' << endl;
 

@@ -33,12 +33,16 @@ class Player : public Character
             int money,
             int experience,
             int level
-        ) : Character{ name, health, attackList, inventory, money}, mExperience(experience), mCurrentLevel(level)
+        ) : Character{ name, health, attackList, inventory, money}, mExperience(experience), 
+                                                                    mCurrentLevel(level),
+                                                                    mKills(0)
         {}
         Player() = default;
 
         int GetCurrentExperience() const { return mExperience; }
         void GiveExperience(int amount);
+        void IncrememntKillCounter();
+        int GetKillCount() const { return mKills; }
 
         void LevelUp();
 
@@ -65,4 +69,5 @@ class Player : public Character
         int mCurrentLevel{ 1 };
         const int mMaxLevel{ 100 };
         const int xpMultiplier = 300;
+		int mKills{ 0 };
 };

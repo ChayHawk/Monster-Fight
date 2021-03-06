@@ -41,6 +41,11 @@ void Player::SetLevel(int setLevelTo)
     mCurrentLevel = setLevelTo;
 }
 
+void Player::IncrememntKillCounter()
+{
+    mKills++;
+}
+
 void Player::TestLevellingAndXPSystem()
 {
     Player test;
