@@ -186,7 +186,6 @@ int main()
 
 
 		uniform_int_distribution<int> randomItemReward(0, itemList.size() - 1);
-		uniform_int_distribution<int> randomAmount(1, 3); //How many items to drop
         Item randomItem{ itemList[randomItemReward(generator)] };
    
         //Randomly generate a reward and set it for this fight, then re-randomize it
