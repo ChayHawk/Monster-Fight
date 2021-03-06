@@ -13,10 +13,6 @@
 #include "Enemy.h"
 #include "Item.h"
 
-using std::tuple;
-using std::make_tuple;
-using std::get;
-
 void Character::TakeDamage(const Attack& attack)
 {
     mHealth -= attack.GetPower();
@@ -35,7 +31,7 @@ void Character::GiveMoney(int amount)
 //This will simply just set health to 100
 void Character::ResetHealth()
 {
-    mHealth = 100;
+    mHealth = MAX_HEALTH;
 }
 
 void Character::Heal(int amount)

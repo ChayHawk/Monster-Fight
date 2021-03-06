@@ -43,9 +43,7 @@ class Character
         vector <tuple<Item, int>> GetInventory() const;
 
         void AddItemToInventory(Item& item, int amount);
-        void SetAttackList(vector<Attack>& attackList);
         vector<Attack> GetAttackList() const;
-        void UseAttack(vector<Attack> attack);
 
         friend ostream& operator<<(ostream& os, const Character& character)
         {
