@@ -280,6 +280,12 @@ int main()
                 //Randomly Choose enemy Attack
                 //============================================
 
+                /*ISSUE
+                * Something im wondering, if i call generator to randomize attack hit chance
+                * will it randomize the enemy name and attack and attack power? it doesnt
+                * seem to, it seems to choose one enemy and attack power and attack and
+                * use it, however i am unsure.
+                */
 				generator();
 
                 if(RandomNumber(generator, 0, attackHitChance) == 0)
