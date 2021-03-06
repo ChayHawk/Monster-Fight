@@ -5,8 +5,8 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.19
-// Lines of Code    : 881
+// Version          : 0.20.0
+// Lines of Code    : 883
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -171,6 +171,7 @@ int main()
     int turn{ 1 };
     int totalTurns{ 1 };
     int battles{ 0 };
+    const int attackHitChance{ 8 };
 
     while (choice != -1)
     {
@@ -190,7 +191,7 @@ int main()
 
         //This makes it so most attacks have a 90% chance to hit.
 
-        cout << "Monster Fight Version 0.19 - 881 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.20.0 - 883 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -212,8 +213,8 @@ int main()
 
             while (Hero.GetHealth() > 0)
             {
-                //Re-roll player and enemy attacks and power levels for random attacks and powers.
-                Attack randomEnemyAttack{ enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)] };
+                //Re-roll enemy attacks and power levels for random attacks and powers.
+                //enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)];
 
                 cout << "\n################################################################" << endl;
                 cout << "##" << "                     MONSTER FIGHT                          ##" << endl;
@@ -234,9 +235,10 @@ int main()
                 }
                 cin >> attackChoice;
 
+                //Call generator to re-randomize
 				generator();
 
-                if(RandomNumber(generator, 0, 8) == 0)
+                if(RandomNumber(generator, 0, attackHitChance) == 0)
                 {
                     cout << Hero.GetName() << "'s attack missed!\n" << endl;
                 }
@@ -280,17 +282,17 @@ int main()
 
 				generator();
 
-                if(RandomNumber(generator, 0, 8) == 0)
+                if(RandomNumber(generator, 0, attackHitChance) == 0)
                 {
                     cout << randomEnemy.GetName() << "'s attack missed!" << endl;
                 }
                 else
                 {
-                    cout << randomEnemy.GetName() << " uses " << randomEnemyAttack.GetName();
+                    cout << randomEnemy.GetName() << " uses " << enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)].GetName();
                     cout << " against " << Hero.GetName() << ", and it does ";
-                    cout << randomEnemyAttack.GetPower() << " damage!\n" << endl;
+                    cout << enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)].GetPower() << " damage!\n" << endl;
 
-					Hero.TakeDamage(randomEnemyAttack.GetPower());
+					Hero.TakeDamage(enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)].GetPower());
                 }
 
 				//============================================
