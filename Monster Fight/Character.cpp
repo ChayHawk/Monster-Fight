@@ -9,9 +9,6 @@
 #include <tuple>
 
 #include "Character.h"
-#include "Attack.h"
-#include "Enemy.h"
-#include "Item.h"
 
 void Character::TakeDamage(const Attack& attack)
 {
