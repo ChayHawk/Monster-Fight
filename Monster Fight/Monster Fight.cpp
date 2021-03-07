@@ -5,8 +5,8 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.20.0
-// Lines of Code    : 883
+// Version          : 0.21.0
+// Lines of Code    : 944
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -94,19 +94,6 @@ int main()
     Attack Slash   ("Slash",     init.attackPower = 2);
     Attack BodySlam("Body Slam", init.attackPower = 4);
 
-
-	vector<Attack> playerAttacks;
-
-    playerAttacks.push_back(Punch);
-    playerAttacks.push_back(Kick);
-    playerAttacks.push_back(BodySlam);
-
-
-	vector<Attack> enemyAttacks;
-
-    enemyAttacks.push_back(Slash);
-    enemyAttacks.push_back(BodySlam);
-
     //============================================
     //CREATE ITEMS AND SET VECTOR
     //============================================
@@ -142,24 +129,61 @@ int main()
     (
         "Disaster Chief", 
         init.health = 100, 
-        playerAttacks, 
         playerInventory, 
         init.money = 0, 
         init.experience = 0, 
         init.level = 1
     );
 
+    Hero.SetAttackList(Punch);
+    Hero.SetAttackList(BodySlam);
+    Hero.SetAttackList(Slash);
+
     //============================================
-    //CREATE ENEMIES AND SET VECTOR
+    //CREATE ENEMIES
     //============================================
 
-    Enemy Dragon  ("Dragon",    init.health = 70, enemyAttacks, enemyInventory, init.xpToGive = 40, init.money = 0);
-    Enemy Skeleton("Skeleton",  init.health = 10, enemyAttacks, enemyInventory, init.xpToGive = 20, init.money = 0);
-    Enemy Troll   ("Troll",     init.health = 25, enemyAttacks, enemyInventory, init.xpToGive = 30, init.money = 0);
-    Enemy GiantRat("Giant Rat", init.health = 15, enemyAttacks, enemyInventory, init.xpToGive = 25, init.money = 0);
-    Enemy Raptor  ("Raptor",    init.health = 35, enemyAttacks, enemyInventory, init.xpToGive = 15, init.money = 0);
+    Enemy Dragon  ("Dragon",    init.health = 70, enemyInventory, init.xpToGive = 40, init.money = 0);
+    Enemy Skeleton("Skeleton",  init.health = 10, enemyInventory, init.xpToGive = 20, init.money = 0);
+    Enemy Troll   ("Troll",     init.health = 25, enemyInventory, init.xpToGive = 30, init.money = 0);
+    Enemy GiantRat("Giant Rat", init.health = 15, enemyInventory, init.xpToGive = 25, init.money = 0);
+    Enemy Raptor  ("Raptor",    init.health = 35, enemyInventory, init.xpToGive = 15, init.money = 0);
 
-    vector<Enemy> enemyContainer;
+	//============================================
+    //SET ENEMY ATTACKS
+    //============================================
+
+    Dragon.SetAttackList(Punch);
+	Dragon.SetAttackList(BodySlam);
+
+    Skeleton.SetAttackList(Punch);
+    Skeleton.SetAttackList(BodySlam);
+    Skeleton.SetAttackList(Slash);
+
+	Troll.SetAttackList(Punch);
+    Troll.SetAttackList(BodySlam);
+    Troll.SetAttackList(Slash);
+
+    GiantRat.SetAttackList(BodySlam);
+    GiantRat.SetAttackList(Slash);
+
+    Raptor.SetAttackList(BodySlam);
+    Raptor.SetAttackList(Slash);
+    Raptor.SetAttackList(Kick);
+
+	//============================================
+    //SET ENEMIES IN CONTAINER FOR RANDOMIZATION
+    // 
+    // Had an error where thiese were before 
+    // the SetAttackList function and attacks
+    // were not setting, its because the enemies
+    // were being added to the vector before
+    // they had a chance to have the attacks
+    // set to them so their attack sizes would
+    // always be 0.
+    //============================================
+
+	vector<Enemy> enemyContainer;
 
     enemyContainer.push_back(Dragon);
     enemyContainer.push_back(Skeleton);
@@ -180,18 +204,20 @@ int main()
         //Choose a random enemy and set it inside vector, if we dont do this
         //A random enemy will be chosen for each call in the fight, we want 
         //the same eney for the duration of the fight.
-        Enemy randomEnemy{ enemyContainer[RandomNumber(generator, 0, enemyContainer.size() -1)] };
+
+        int randomEnemySelection = RandomNumber(generator, 0, enemyContainer.size() - 1);
+        enemyContainer[randomEnemySelection];
 
         Item randomItem{ itemList[RandomNumber(generator, 0, itemList.size() -1)] };
    
         //Randomly generate a reward and set it for this fight, then re-randomize it
         //for the next fight.
-        randomEnemy.GiveMoney(RandomNumber(generator, 10, 100));
-        randomEnemy.XpToGive(RandomNumber(generator, 10, 60));
+        enemyContainer[randomEnemySelection].GiveMoney(RandomNumber(generator, 10, 100));
+        enemyContainer[randomEnemySelection].XpToGive(RandomNumber(generator, 10, 60));
 
         //This makes it so most attacks have a 90% chance to hit.
 
-        cout << "Monster Fight Version 0.20.0 - 883 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.21.0 - 944 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -205,17 +231,14 @@ int main()
         case 1:
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-            //Initial encounter
-            cout << "\n" << Hero.GetName() << " encountered a " << randomEnemy.GetName() << "!" << endl;
-            cout << "It has " << randomEnemy.GetHealth() << " Health!\n" << endl;
+            //Setup Initial encounter
+            cout << "\n" << Hero.GetName() << " encountered a " << enemyContainer[randomEnemySelection].GetName() << "!" << endl;
+            cout << "It has " << enemyContainer[randomEnemySelection].GetHealth() << " Health!\n" << endl;
 
             turn = 1;
 
             while (Hero.GetHealth() > 0)
             {
-                //Re-roll enemy attacks and power levels for random attacks and powers.
-                //enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)];
-
                 cout << "\n################################################################" << endl;
                 cout << "##" << "                     MONSTER FIGHT                          ##" << endl;
                 cout << "################################################################" << endl;
@@ -231,12 +254,24 @@ int main()
 
 				for (auto& i : Hero.GetAttackList())
                 {
-					cout << counter++ << ") " << i << endl;
+                    if (Hero.GetAttackList().empty())
+                    {
+                        cout << Hero.GetName() << "'s attack list is empty!" << endl;
+                    }
+                    else
+                    {
+						cout << counter++ << ") " << i << endl;
+                    }
                 }
                 cin >> attackChoice;
 
                 //Call generator to re-randomize
 				generator();
+
+				//============================================
+                //See if attack missed and if not, then
+                // use an attack.
+                //============================================
 
                 if(RandomNumber(generator, 0, attackHitChance) == 0)
                 {
@@ -245,9 +280,9 @@ int main()
                 else
                 {
 					cout << "\nACTION------------------------------------------------------------------" << endl;
-					cout << Hero.GetName() << " used " << playerAttacks[attackChoice -1].GetName() 
-                         << " against the " << randomEnemy.GetName() << ", it does " << playerAttacks[attackChoice -1].GetPower() << " damage." << endl;
-					randomEnemy.TakeDamage(playerAttacks[attackChoice -1]);
+					cout << Hero.GetName() << " used " << Hero.GetAttackList()[attackChoice -1].GetName() 
+                         << " against the " << enemyContainer[randomEnemySelection].GetName() << ", it does " << Hero.GetAttackList()[attackChoice -1].GetPower() << " damage." << endl;
+					enemyContainer[randomEnemySelection].TakeDamage(Hero.GetAttackList()[attackChoice -1].GetPower());
                 }
 
 				//============================================
@@ -255,19 +290,19 @@ int main()
                 //then give player money, xp, and items
                 //============================================
 
-                if (randomEnemy.GetHealth() <= 0)
+                if (enemyContainer[randomEnemySelection].GetHealth() <= 0)
                 {
-                    cout << Hero.GetName() << " defeated " << randomEnemy.GetName();
-                    cout << " and got " << randomEnemy.GetMoney() << " gold and ";
+                    cout << Hero.GetName() << " defeated " << enemyContainer[randomEnemySelection].GetName();
+                    cout << " and got " << enemyContainer[randomEnemySelection].GetMoney() << " gold and ";
 
-                    Hero.GiveExperience(randomEnemy.GetXpToGive());
+                    Hero.GiveExperience(enemyContainer[randomEnemySelection].GetXpToGive());
 
-                    cout << randomEnemy.GetXpToGive() <<  " experience.\n" << endl;
+                    cout << enemyContainer[randomEnemySelection].GetXpToGive() <<  " experience.\n" << endl;
 
                     Hero.LevelUp();
-                    Hero.GiveMoney(randomEnemy.GetMoney());
+                    Hero.GiveMoney(enemyContainer[randomEnemySelection].GetMoney());
 
-                    cout << randomEnemy.GetName() << " dropped " << RandomNumber(generator, 1, 3) << " " << randomItem.GetName() << "'s." << endl;
+                    cout << enemyContainer[randomEnemySelection].GetName() << " dropped " << RandomNumber(generator, 1, 3) << " " << randomItem.GetName() << "'s." << endl;
                     Hero.AddItemToInventory(randomItem, RandomNumber(generator, 1, 3));
 
                     battles++;
@@ -280,25 +315,27 @@ int main()
                 //Randomly Choose enemy Attack
                 //============================================
 
-                /*ISSUE
-                * Something im wondering, if i call generator to randomize attack hit chance
-                * will it randomize the enemy name and attack and attack power? it doesnt
-                * seem to, it seems to choose one enemy and attack power and attack and
-                * use it, however i am unsure.
-                */
 				generator();
 
                 if(RandomNumber(generator, 0, attackHitChance) == 0)
                 {
-                    cout << randomEnemy.GetName() << "'s attack missed!" << endl;
+                    cout << enemyContainer[randomEnemySelection].GetName() << "'s attack missed!" << endl;
                 }
                 else
                 {
-                    cout << randomEnemy.GetName() << " uses " << enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)].GetName();
-                    cout << " against " << Hero.GetName() << ", and it does ";
-                    cout << enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)].GetPower() << " damage!\n" << endl;
+                    if (enemyContainer[randomEnemySelection].GetAttackList().size() == 0)
+                    {
+                        cout << "ERROR: Enemy attack list vector is empty." << endl;
+                    }
+                    else
+                    {
+						cout << enemyContainer[randomEnemySelection].GetName() << " uses " << enemyContainer[randomEnemySelection].GetAttackList()[RandomNumber(generator, 0, enemyContainer[randomEnemySelection].GetAttackList().size() - 1)].GetName();
+                        cout << " against " << Hero.GetName() << ", and it does ";
+                        cout << enemyContainer[randomEnemySelection].GetAttackList()[RandomNumber(generator, 0, enemyContainer[randomEnemySelection].GetAttackList().size() - 1)].GetPower() << " damage!\n" << endl;
 
-					Hero.TakeDamage(enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)].GetPower());
+					    Hero.TakeDamage(enemyContainer[randomEnemySelection].GetAttackList()[RandomNumber(generator, 0, enemyContainer[randomEnemySelection].GetAttackList().size() - 1)].GetPower());
+                    }
+                    
                 }
 
 				//============================================
@@ -308,7 +345,7 @@ int main()
 
                 if (Hero.GetHealth() <= 0)
                 {
-                    cout << randomEnemy.GetName() << " defeated " << Hero.GetName() << endl;
+                    cout << enemyContainer[randomEnemySelection].GetName() << " defeated " << Hero.GetName() << endl;
 
                     cout << "\n================================================================\n" << endl;
 
@@ -332,13 +369,14 @@ int main()
                 cout << Hero.GetName() << "'s Experience: " << Hero.GetCurrentExperience() << "/" << Hero.CalculateExperience() << endl;
                 cout << Hero.GetName() << "'s Level:      " << Hero.GetLevel() << "/" << Hero.GetMaxLevel() << endl;
 
-                cout << '\n' << randomEnemy.GetName() << '\n' << endl;
+                cout << '\n' << enemyContainer[randomEnemySelection].GetName() << '\n' << endl;
 
-                cout << randomEnemy.GetName() << "'s Health: " << randomEnemy.GetHealth() << endl;
+                cout << enemyContainer[randomEnemySelection].GetName() << "'s Health: " << enemyContainer[randomEnemySelection].GetHealth() << endl;
 
                 cout << "\n========================================================================\n" << endl;
 
                 cout << "Do What?\n" << endl;
+
                 cout << "1) Continue" << endl;
                 cout << "2) Heal" << endl;
                 cin >> choice;

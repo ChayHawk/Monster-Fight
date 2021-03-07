@@ -28,14 +28,13 @@ class Player : public Character
         (
             const string& name,
             int health, 
-            vector<Attack>& attackList,
             vector<tuple<Item, int>>& inventory,
             int money,
             int experience,
             int level
-        ) : Character{ name, health, attackList, inventory, money}, mExperience(experience), 
-                                                                    mCurrentLevel(level),
-                                                                    mKills(0)
+        ) : Character{ name, health, inventory, money}, mExperience(experience), 
+                                                        mCurrentLevel(level),
+                                                        mKills(0)
         {}
         Player() = default;
 
