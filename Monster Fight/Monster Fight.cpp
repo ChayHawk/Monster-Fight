@@ -5,8 +5,8 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.21.0
-// Lines of Code    : 944
+// Version          : 0.22.1
+// Lines of Code    : 948
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -57,12 +57,12 @@ using std::make_tuple;
 * 3. Do some general cleanup and refactoring of the code base.
 */
 
-//============================================
+//=================================================================================================
 //Use a struct to define constructor
 //object variables so we dont have magic numbers
 //and each number has a name associated
 //with it so we know what it does.
-//============================================
+//=================================================================================================
 
 struct Init
 {
@@ -85,18 +85,18 @@ int main()
     random_device rd;
     default_random_engine generator(rd());
 
-    //============================================
+    //=================================================================================================
     //CREATE ATTACKS AND SET VECTORS
-    //============================================
+    //=================================================================================================
 
     Attack Punch   ("Punch",     init.attackPower = 3);
     Attack Kick    ("Kick",      init.attackPower = 1);
     Attack Slash   ("Slash",     init.attackPower = 2);
     Attack BodySlam("Body Slam", init.attackPower = 4);
 
-    //============================================
+    //=================================================================================================
     //CREATE ITEMS AND SET VECTOR
-    //============================================
+    //=================================================================================================
 
     Item WeakPotion  ("Weak Potion",   init.cost = 20, init.effect = 10);
     Item StrongPotion("Strong Potion", init.cost = 40, init.effect = 25);
@@ -109,21 +109,21 @@ int main()
     itemList.push_back(SuperPotion); 
 
 
-    //============================================
+    //=================================================================================================
     //SET PLAYER INVENTORY VECTOR
-    //============================================
+    //=================================================================================================
 
     vector<tuple<Item, int>> playerInventory;
 
-    //============================================
+    //=================================================================================================
     //SET ENEMY INVENTORY VECTOR
-    //============================================
+    //=================================================================================================
 
     vector<tuple<Item, int>> enemyInventory;
 
-    //============================================
+    //=================================================================================================
     //INSTANTIATE PLAYER CONSTRUCTOR
-    //============================================
+    //=================================================================================================
     
     Player Hero
     (
@@ -139,9 +139,9 @@ int main()
     Hero.SetAttackList(BodySlam);
     Hero.SetAttackList(Slash);
 
-    //============================================
+    //=================================================================================================
     //CREATE ENEMIES
-    //============================================
+    //=================================================================================================
 
     Enemy Dragon  ("Dragon",    init.health = 70, enemyInventory, init.xpToGive = 40, init.money = 0);
     Enemy Skeleton("Skeleton",  init.health = 10, enemyInventory, init.xpToGive = 20, init.money = 0);
@@ -149,9 +149,9 @@ int main()
     Enemy GiantRat("Giant Rat", init.health = 15, enemyInventory, init.xpToGive = 25, init.money = 0);
     Enemy Raptor  ("Raptor",    init.health = 35, enemyInventory, init.xpToGive = 15, init.money = 0);
 
-	//============================================
+	//=================================================================================================
     //SET ENEMY ATTACKS
-    //============================================
+    //=================================================================================================
 
     Dragon.SetAttackList(Punch);
 	Dragon.SetAttackList(BodySlam);
@@ -171,17 +171,13 @@ int main()
     Raptor.SetAttackList(Slash);
     Raptor.SetAttackList(Kick);
 
-	//============================================
+	//=================================================================================================
     //SET ENEMIES IN CONTAINER FOR RANDOMIZATION
     // 
-    // Had an error where thiese were before 
-    // the SetAttackList function and attacks
-    // were not setting, its because the enemies
-    // were being added to the vector before
-    // they had a chance to have the attacks
-    // set to them so their attack sizes would
-    // always be 0.
-    //============================================
+    // Had an error where these were before the SetAttackList function and attacks were not setting, 
+    // its because the enemies were being added to the vector before they had a chance to have the 
+    // attacks set to them so their attack sizes would always be 0.
+    //=================================================================================================
 
 	vector<Enemy> enemyContainer;
 
@@ -201,23 +197,31 @@ int main()
     {
         choice = 0;
 
-        //Choose a random enemy and set it inside vector, if we dont do this
-        //A random enemy will be chosen for each call in the fight, we want 
-        //the same eney for the duration of the fight.
+		//=================================================================================================
+        //SET ENEMY ATTACKS
+        // 
+        //Here we randomly choose an enemy and an item to give and set it to the item list
+        //We instantiate them here so they are only called once becuase if we call them
+        //inside the game loop, the player will fight a random enemy each turn, when
+        //we only want them to fight 1 enemy per battle, then when the enemy is
+        //defeated the program returns here where a new enemy and new item are randomly
+        //chosen for the next battle. The same is done for money and XP as well.
+		//=================================================================================================
 
         int randomEnemySelection = RandomNumber(generator, 0, enemyContainer.size() - 1);
         enemyContainer[randomEnemySelection];
 
-        Item randomItem{ itemList[RandomNumber(generator, 0, itemList.size() -1)] };
+        int randomItemSelection = RandomNumber(generator, 0, itemList.size() - 1);
+        itemList[randomItemSelection];
    
-        //Randomly generate a reward and set it for this fight, then re-randomize it
-        //for the next fight.
         enemyContainer[randomEnemySelection].GiveMoney(RandomNumber(generator, 10, 100));
         enemyContainer[randomEnemySelection].XpToGive(RandomNumber(generator, 10, 60));
 
-        //This makes it so most attacks have a 90% chance to hit.
+        //=================================================================================================
+        //MAIN GAME
+        //=================================================================================================
 
-        cout << "Monster Fight Version 0.21.0 - 944 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.22.1 - 948 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -243,9 +247,9 @@ int main()
                 cout << "##" << "                     MONSTER FIGHT                          ##" << endl;
                 cout << "################################################################" << endl;
 
-                //============================================
+                //=================================================================================================
                 //Player chooses Attack
-                //============================================
+                //=================================================================================================
 
                 int counter{ 1 };
                 int attackChoice{ 0 };
@@ -268,10 +272,10 @@ int main()
                 //Call generator to re-randomize
 				generator();
 
-				//============================================
+				//=================================================================================================
                 //See if attack missed and if not, then
                 // use an attack.
-                //============================================
+                //=================================================================================================
 
                 if(RandomNumber(generator, 0, attackHitChance) == 0)
                 {
@@ -285,10 +289,10 @@ int main()
 					enemyContainer[randomEnemySelection].TakeDamage(Hero.GetAttackList()[attackChoice -1].GetPower());
                 }
 
-				//============================================
+				//=================================================================================================
                 //Check to see if enemy is dead and if so
                 //then give player money, xp, and items
-                //============================================
+                //=================================================================================================
 
                 if (enemyContainer[randomEnemySelection].GetHealth() <= 0)
                 {
@@ -302,8 +306,8 @@ int main()
                     Hero.LevelUp();
                     Hero.GiveMoney(enemyContainer[randomEnemySelection].GetMoney());
 
-                    cout << enemyContainer[randomEnemySelection].GetName() << " dropped " << RandomNumber(generator, 1, 3) << " " << randomItem.GetName() << "'s." << endl;
-                    Hero.AddItemToInventory(randomItem, RandomNumber(generator, 1, 3));
+                    cout << enemyContainer[randomEnemySelection].GetName() << " dropped " << RandomNumber(generator, 1, 3) << " " << itemList[randomItemSelection].GetName() << "'s." << endl;
+                    Hero.AddItemToInventory(itemList[randomItemSelection], RandomNumber(generator, 1, 3));
 
                     battles++;
                     Hero.IncrememntKillCounter();
@@ -311,9 +315,9 @@ int main()
                     break;
                 }
 
-				//============================================
+				//=================================================================================================
                 //Randomly Choose enemy Attack
-                //============================================
+                //=================================================================================================
 
 				generator();
 
@@ -338,10 +342,10 @@ int main()
                     
                 }
 
-				//============================================
+				//=================================================================================================
                 //Check if player is dead, and if so, end
                 //the game.
-                //============================================
+                //=================================================================================================
 
                 if (Hero.GetHealth() <= 0)
                 {
@@ -354,9 +358,9 @@ int main()
                     return 0;
                 }
 
-				//============================================
+				//=================================================================================================
                 //Display players stats
-                //============================================
+                //=================================================================================================
 
                 cout << "\nSTATS===================================================================" << endl;
 
