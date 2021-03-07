@@ -5,8 +5,8 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.20.0
-// Lines of Code    : 883
+// Version          : 0.20.1-W.2
+// Lines of Code    : 922
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -94,19 +94,6 @@ int main()
     Attack Slash   ("Slash",     init.attackPower = 2);
     Attack BodySlam("Body Slam", init.attackPower = 4);
 
-
-	//vector<Attack> playerAttacks;
-
-    /*playerAttacks.push_back(Punch);
-    playerAttacks.push_back(Kick);
-    playerAttacks.push_back(BodySlam);*/
-
-
-	//vector<Attack> enemyAttacks;
-
-    //enemyAttacks.push_back(Slash);
-    //enemyAttacks.push_back(BodySlam);
-
     //============================================
     //CREATE ITEMS AND SET VECTOR
     //============================================
@@ -170,6 +157,10 @@ int main()
     enemyContainer.push_back(GiantRat);
     enemyContainer.push_back(Raptor);
 
+	//============================================
+    //SET ENEMY ATTACKS
+    //============================================
+
     Dragon.SetAttackList(Punch);
 	Dragon.SetAttackList(BodySlam);
 
@@ -212,7 +203,7 @@ int main()
 
         //This makes it so most attacks have a 90% chance to hit.
 
-        cout << "Monster Fight Version 0.20.0 - 883 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.20.1-W.2 - 922 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -234,9 +225,6 @@ int main()
 
             while (Hero.GetHealth() > 0)
             {
-                //Re-roll enemy attacks and power levels for random attacks and powers.
-                //enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)];
-
                 cout << "\n################################################################" << endl;
                 cout << "##" << "                     MONSTER FIGHT                          ##" << endl;
                 cout << "################################################################" << endl;
