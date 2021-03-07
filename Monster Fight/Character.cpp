@@ -43,7 +43,7 @@ void Character::AddItemToInventory(Item& item, int amount)
     mInventory.push_back(make_tuple(item, amount));
 }
 
-vector<Attack> Character::GetAttackList() const
+vector<Attack>& Character::GetAttackList()
 {
     return mAttackList;
 }

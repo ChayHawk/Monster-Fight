@@ -42,7 +42,7 @@ class Character
         vector <tuple<Item, int>> GetInventory() const;
 
         void AddItemToInventory(Item& item, int amount);
-        vector<Attack> GetAttackList() const;
+        vector<Attack>& GetAttackList();
         void SetAttackList(Attack& attack);
         void SetCharacterList(Character& character) const;
 

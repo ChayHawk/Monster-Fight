@@ -5,8 +5,8 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.20.1-W.2
-// Lines of Code    : 922
+// Version          : 0.20.1-W.3
+// Lines of Code    : 937
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -203,7 +203,7 @@ int main()
 
         //This makes it so most attacks have a 90% chance to hit.
 
-        cout << "Monster Fight Version 0.20.1-W.2 - 922 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.20.1-W.3 - 937 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -310,11 +310,26 @@ int main()
                 }
                 else
                 {
-                    cout << randomEnemy.GetName() << " uses " << randomEnemy.GetAttackList()[RandomNumber(generator, 0, randomEnemy.GetAttackList().size() - 1)].GetName();
-                    cout << " against " << Hero.GetName() << ", and it does ";
-                    cout << randomEnemy.GetAttackList()[RandomNumber(generator, 0, randomEnemy.GetAttackList().size() - 1)].GetPower() << " damage!\n" << endl;
+                    /*BUG
+                    * Having an issue here specifically with randomEnemy.GetAttackList().size()
+                    * causing an issue with the randomizer.
+                    */
+                    cout << "ENEMY ATTACK LIST SIZE: " << randomEnemy.GetAttackList().size() << endl;
+					cout << "HERO ATTACK LIST SIZE: " << Hero.GetAttackList().size() << endl;
 
-					Hero.TakeDamage(randomEnemy.GetAttackList()[RandomNumber(generator, 0, randomEnemy.GetAttackList().size() - 1)].GetPower());
+                    if (randomEnemy.GetAttackList().size() == 0)
+                    {
+                        cout << "ERROR: Enemy attack list vector is empty." << endl;
+                    }
+                    else
+                    {
+						cout << randomEnemy.GetName() << " uses " << randomEnemy.GetAttackList()[RandomNumber(generator, 0, randomEnemy.GetAttackList().size() - 1)].GetName();
+                        cout << " against " << Hero.GetName() << ", and it does ";
+                        cout << randomEnemy.GetAttackList()[RandomNumber(generator, 0, randomEnemy.GetAttackList().size() - 1)].GetPower() << " damage!\n" << endl;
+
+					    Hero.TakeDamage(randomEnemy.GetAttackList()[RandomNumber(generator, 0, randomEnemy.GetAttackList().size() - 1)].GetPower());
+                    }
+                    
                 }
 
 				//============================================
