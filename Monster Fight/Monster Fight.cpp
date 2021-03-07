@@ -95,17 +95,17 @@ int main()
     Attack BodySlam("Body Slam", init.attackPower = 4);
 
 
-	vector<Attack> playerAttacks;
+	//vector<Attack> playerAttacks;
 
-    playerAttacks.push_back(Punch);
+    /*playerAttacks.push_back(Punch);
     playerAttacks.push_back(Kick);
-    playerAttacks.push_back(BodySlam);
+    playerAttacks.push_back(BodySlam);*/
 
 
-	vector<Attack> enemyAttacks;
+	//vector<Attack> enemyAttacks;
 
-    enemyAttacks.push_back(Slash);
-    enemyAttacks.push_back(BodySlam);
+    //enemyAttacks.push_back(Slash);
+    //enemyAttacks.push_back(BodySlam);
 
     //============================================
     //CREATE ITEMS AND SET VECTOR
@@ -142,22 +142,25 @@ int main()
     (
         "Disaster Chief", 
         init.health = 100, 
-        playerAttacks, 
         playerInventory, 
         init.money = 0, 
         init.experience = 0, 
         init.level = 1
     );
 
+    Hero.SetAttackList(Punch);
+    Hero.SetAttackList(BodySlam);
+    Hero.SetAttackList(Slash);
+
     //============================================
     //CREATE ENEMIES AND SET VECTOR
     //============================================
 
-    Enemy Dragon  ("Dragon",    init.health = 70, enemyAttacks, enemyInventory, init.xpToGive = 40, init.money = 0);
-    Enemy Skeleton("Skeleton",  init.health = 10, enemyAttacks, enemyInventory, init.xpToGive = 20, init.money = 0);
-    Enemy Troll   ("Troll",     init.health = 25, enemyAttacks, enemyInventory, init.xpToGive = 30, init.money = 0);
-    Enemy GiantRat("Giant Rat", init.health = 15, enemyAttacks, enemyInventory, init.xpToGive = 25, init.money = 0);
-    Enemy Raptor  ("Raptor",    init.health = 35, enemyAttacks, enemyInventory, init.xpToGive = 15, init.money = 0);
+    Enemy Dragon  ("Dragon",    init.health = 70, enemyInventory, init.xpToGive = 40, init.money = 0);
+    Enemy Skeleton("Skeleton",  init.health = 10, enemyInventory, init.xpToGive = 20, init.money = 0);
+    Enemy Troll   ("Troll",     init.health = 25, enemyInventory, init.xpToGive = 30, init.money = 0);
+    Enemy GiantRat("Giant Rat", init.health = 15, enemyInventory, init.xpToGive = 25, init.money = 0);
+    Enemy Raptor  ("Raptor",    init.health = 35, enemyInventory, init.xpToGive = 15, init.money = 0);
 
     vector<Enemy> enemyContainer;
 
@@ -166,6 +169,24 @@ int main()
     enemyContainer.push_back(Troll);
     enemyContainer.push_back(GiantRat);
     enemyContainer.push_back(Raptor);
+
+    Dragon.SetAttackList(Punch);
+	Dragon.SetAttackList(BodySlam);
+
+    Skeleton.SetAttackList(Punch);
+    Skeleton.SetAttackList(BodySlam);
+    Skeleton.SetAttackList(Slash);
+
+	Troll.SetAttackList(Punch);
+    Troll.SetAttackList(BodySlam);
+    Troll.SetAttackList(Slash);
+
+    GiantRat.SetAttackList(BodySlam);
+    GiantRat.SetAttackList(Slash);
+
+    Raptor.SetAttackList(BodySlam);
+    Raptor.SetAttackList(Slash);
+    Raptor.SetAttackList(Kick);
 
     int choice{ 0 };
     int turn{ 1 };
@@ -231,7 +252,14 @@ int main()
 
 				for (auto& i : Hero.GetAttackList())
                 {
-					cout << counter++ << ") " << i << endl;
+                    if (Hero.GetAttackList().empty())
+                    {
+                        cout << Hero.GetName() << "'s attack list is empty!" << endl;
+                    }
+                    else
+                    {
+						cout << counter++ << ") " << i << endl;
+                    }
                 }
                 cin >> attackChoice;
 
@@ -245,9 +273,9 @@ int main()
                 else
                 {
 					cout << "\nACTION------------------------------------------------------------------" << endl;
-					cout << Hero.GetName() << " used " << playerAttacks[attackChoice -1].GetName() 
-                         << " against the " << randomEnemy.GetName() << ", it does " << playerAttacks[attackChoice -1].GetPower() << " damage." << endl;
-					randomEnemy.TakeDamage(playerAttacks[attackChoice -1]);
+					cout << Hero.GetName() << " used " << Hero.GetAttackList()[attackChoice -1].GetName() 
+                         << " against the " << randomEnemy.GetName() << ", it does " << Hero.GetAttackList()[attackChoice -1].GetPower() << " damage." << endl;
+					randomEnemy.TakeDamage(Hero.GetAttackList()[attackChoice -1].GetPower());
                 }
 
 				//============================================
@@ -294,11 +322,11 @@ int main()
                 }
                 else
                 {
-                    cout << randomEnemy.GetName() << " uses " << enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)].GetName();
+                    cout << randomEnemy.GetName() << " uses " << randomEnemy.GetAttackList()[RandomNumber(generator, 0, randomEnemy.GetAttackList().size() - 1)].GetName();
                     cout << " against " << Hero.GetName() << ", and it does ";
-                    cout << enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)].GetPower() << " damage!\n" << endl;
+                    cout << randomEnemy.GetAttackList()[RandomNumber(generator, 0, randomEnemy.GetAttackList().size() - 1)].GetPower() << " damage!\n" << endl;
 
-					Hero.TakeDamage(enemyAttacks[RandomNumber(generator, 0, enemyAttacks.size() - 1)].GetPower());
+					Hero.TakeDamage(randomEnemy.GetAttackList()[RandomNumber(generator, 0, randomEnemy.GetAttackList().size() - 1)].GetPower());
                 }
 
 				//============================================

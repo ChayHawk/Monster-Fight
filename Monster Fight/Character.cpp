@@ -10,11 +10,6 @@
 
 #include "Character.h"
 
-void Character::TakeDamage(const Attack& attack)
-{
-    mHealth -= attack.GetPower();
-}
-
 void Character::TakeDamage(int amount)
 {
     mHealth -= amount;
@@ -57,6 +52,30 @@ vector<tuple<Item, int>> Character::GetInventory() const
 {
     return mInventory;
 }
+
+//This will allow each character to have their own moves, it will
+//require more typing but allows for finer control over what character
+//has what move instead of creating a vector and adding attacks to
+//that and then adding that set move list to each character.
+void Character::SetAttackList(Attack& attack)
+{
+    mAttackList.push_back(attack);
+}
+
+//void SetCharacterList(Character& character) const
+//{
+//    for (auto& i : /*Character list*/)
+//    {
+//        if (i.GetName() == /*Character*/.GetName())
+//        {
+//            cout << /*Character list*/.GetName() << " is already in this character's moveset." << endl;
+//        }
+//        else
+//        {
+//			/*Character list*/.push_back(/*Character*/);
+//        }
+//    }
+//}
 
 /*TO DO
 * This function doesnt have any way to discern which item was used.
