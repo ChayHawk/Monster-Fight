@@ -33,8 +33,8 @@ class Player : public Character
             int experience,
             int level
         ) : Character{ name, health, inventory, money}, mExperience(experience), 
-                                                                    mCurrentLevel(level),
-                                                                    mKills(0)
+                                                        mCurrentLevel(level),
+                                                        mKills(0)
         {}
         Player() = default;
 

@@ -5,8 +5,8 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.20.1-W.4
-// Lines of Code    : 934
+// Version          : 0.21.0
+// Lines of Code    : 944
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -140,7 +140,7 @@ int main()
     Hero.SetAttackList(Slash);
 
     //============================================
-    //CREATE ENEMIES AND SET VECTOR
+    //CREATE ENEMIES
     //============================================
 
     Enemy Dragon  ("Dragon",    init.health = 70, enemyInventory, init.xpToGive = 40, init.money = 0);
@@ -148,14 +148,6 @@ int main()
     Enemy Troll   ("Troll",     init.health = 25, enemyInventory, init.xpToGive = 30, init.money = 0);
     Enemy GiantRat("Giant Rat", init.health = 15, enemyInventory, init.xpToGive = 25, init.money = 0);
     Enemy Raptor  ("Raptor",    init.health = 35, enemyInventory, init.xpToGive = 15, init.money = 0);
-
-    vector<Enemy> enemyContainer;
-
-    enemyContainer.push_back(Dragon);
-    enemyContainer.push_back(Skeleton);
-    enemyContainer.push_back(Troll);
-    enemyContainer.push_back(GiantRat);
-    enemyContainer.push_back(Raptor);
 
 	//============================================
     //SET ENEMY ATTACKS
@@ -179,6 +171,26 @@ int main()
     Raptor.SetAttackList(Slash);
     Raptor.SetAttackList(Kick);
 
+	//============================================
+    //SET ENEMIES IN CONTAINER FOR RANDOMIZATION
+    // 
+    // Had an error where thiese were before 
+    // the SetAttackList function and attacks
+    // were not setting, its because the enemies
+    // were being added to the vector before
+    // they had a chance to have the attacks
+    // set to them so their attack sizes would
+    // always be 0.
+    //============================================
+
+	vector<Enemy> enemyContainer;
+
+    enemyContainer.push_back(Dragon);
+    enemyContainer.push_back(Skeleton);
+    enemyContainer.push_back(Troll);
+    enemyContainer.push_back(GiantRat);
+    enemyContainer.push_back(Raptor);
+
     int choice{ 0 };
     int turn{ 1 };
     int totalTurns{ 1 };
@@ -194,7 +206,6 @@ int main()
         //the same eney for the duration of the fight.
 
         int randomEnemySelection = RandomNumber(generator, 0, enemyContainer.size() - 1);
-
         enemyContainer[randomEnemySelection];
 
         Item randomItem{ itemList[RandomNumber(generator, 0, itemList.size() -1)] };
@@ -206,7 +217,7 @@ int main()
 
         //This makes it so most attacks have a 90% chance to hit.
 
-        cout << "Monster Fight Version 0.20.1-W.4 - 934 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.21.0 - 944 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -256,6 +267,11 @@ int main()
 
                 //Call generator to re-randomize
 				generator();
+
+				//============================================
+                //See if attack missed and if not, then
+                // use an attack.
+                //============================================
 
                 if(RandomNumber(generator, 0, attackHitChance) == 0)
                 {
@@ -307,13 +323,6 @@ int main()
                 }
                 else
                 {
-                    /*BUG
-                    * Having an issue here specifically with randomEnemy.GetAttackList().size()
-                    * causing an issue with the randomizer.
-                    */
-                    cout << "ENEMY ATTACK LIST SIZE: " << enemyContainer[randomEnemySelection].GetAttackList().size() << endl;//Debug
-					cout << "HERO ATTACK LIST SIZE: " << Hero.GetAttackList().size() << endl;//Debug
-
                     if (enemyContainer[randomEnemySelection].GetAttackList().size() == 0)
                     {
                         cout << "ERROR: Enemy attack list vector is empty." << endl;
@@ -367,6 +376,7 @@ int main()
                 cout << "\n========================================================================\n" << endl;
 
                 cout << "Do What?\n" << endl;
+
                 cout << "1) Continue" << endl;
                 cout << "2) Heal" << endl;
                 cin >> choice;
