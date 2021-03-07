@@ -5,8 +5,8 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.22.0
-// Lines of Code    : 952
+// Version          : 0.22.1
+// Lines of Code    : 948
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -174,13 +174,9 @@ int main()
 	//=================================================================================================
     //SET ENEMIES IN CONTAINER FOR RANDOMIZATION
     // 
-    // Had an error where thiese were before 
-    // the SetAttackList function and attacks
-    // were not setting, its because the enemies
-    // were being added to the vector before
-    // they had a chance to have the attacks
-    // set to them so their attack sizes would
-    // always be 0.
+    // Had an error where these were before the SetAttackList function and attacks were not setting, 
+    // its because the enemies were being added to the vector before they had a chance to have the 
+    // attacks set to them so their attack sizes would always be 0.
     //=================================================================================================
 
 	vector<Enemy> enemyContainer;
@@ -225,7 +221,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.22.0 - 952 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.22.1 - 948 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
