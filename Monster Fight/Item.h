@@ -22,6 +22,8 @@ class Item
 		string GetName() const { return mName; }
 		int GetCost() const { return mCost; }
 		int GetEffect() const { return mEffect; }
+		string GetInfo() const { return mInfo; }
+		void SetInfo(const string& info) { mInfo = info; }
 
 		friend ostream& operator<<(ostream& os, const Item& item)
         {
@@ -35,6 +37,6 @@ class Item
 	private:
 		string mName{ "Item Name" };
 		int mCost{ 0 };
-		//Find a better name than effect.
 		int mEffect{ 0 }; //Effect can be used to give soemthing like health, ammo etc.
+		string mInfo{ "Item Info" }; //Not setup yet
 };

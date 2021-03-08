@@ -23,7 +23,7 @@ void Character::GiveMoney(int amount)
 //This will simply just set health to 100
 void Character::ResetHealth()
 {
-    mHealth = MAX_HEALTH;
+    mHealth = GetMaxHealth();
 }
 
 void Character::Heal(int amount)
@@ -57,25 +57,10 @@ vector<tuple<Item, int>> Character::GetInventory() const
 //require more typing but allows for finer control over what character
 //has what move instead of creating a vector and adding attacks to
 //that and then adding that set move list to each character.
-void Character::SetAttackList(Attack& attack)
+void Character::GiveAttack(Attack& attack)
 {
     mAttackList.push_back(attack);
 }
-
-//void SetCharacterList(Character& character) const
-//{
-//    for (auto& i : /*Character list*/)
-//    {
-//        if (i.GetName() == /*Character*/.GetName())
-//        {
-//            cout << /*Character list*/.GetName() << " is already in this character's moveset." << endl;
-//        }
-//        else
-//        {
-//			/*Character list*/.push_back(/*Character*/);
-//        }
-//    }
-//}
 
 /*TO DO
 * This function doesnt have any way to discern which item was used.
@@ -134,10 +119,13 @@ void Character::UseItem()
                     Heal(get<0>(mInventory[choice - 1]).GetEffect());
                     cout << "\n" << GetName() << "'s health restored to " << GetHealth() << "\n" << endl;
 
+                    //Create an index variable to make things a little easier to read.
+                    int index = choice - 1;
+
                     //Remove item from inventory if there is no more of it.
                     if (get<1>(mInventory[choice - 1]) == 0)
                     {
-                        mInventory.erase(mInventory.begin() + choice -1);
+                        mInventory.erase(mInventory.begin() + index);
                     }
                 }
                 else if (mHealth == MAX_HEALTH)

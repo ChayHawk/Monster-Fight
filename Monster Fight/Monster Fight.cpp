@@ -5,7 +5,7 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.24.0
+// Version          : 0.25.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
 // Lines of Code    : 956
 // Description      : Game where you battle random monsters
@@ -54,6 +54,7 @@ struct Init
     int cost{ 0 };
     int effect{ 0 };
     int health{ 0 };
+    int maxHealth{ 0 };
     int xpToGive{ 0 };
     int experience{ 0 };
     int level{ 0 };
@@ -109,49 +110,50 @@ int main()
     
     Player Hero
     (
-        "Disaster Chief", 
-        init.health = 10, 
+        "Disaster Chief",
+        init.health = 100,
+        init.maxHealth = 100,
         playerInventory, 
         init.money = 0, 
         init.experience = 0, 
         init.level = 1
     );
 
-    Hero.SetAttackList(Punch);
-    Hero.SetAttackList(BodySlam);
-    Hero.SetAttackList(Slash);
+    Hero.GiveAttack(Punch);
+    Hero.GiveAttack(BodySlam);
+    Hero.GiveAttack(Slash);
 
     //=================================================================================================
     //CREATE ENEMIES
     //=================================================================================================
 
-    Enemy Dragon  ("Dragon",    init.health = 70, enemyInventory, init.xpToGive = 40, init.money = 0);
-    Enemy Skeleton("Skeleton",  init.health = 10, enemyInventory, init.xpToGive = 20, init.money = 0);
-    Enemy Troll   ("Troll",     init.health = 25, enemyInventory, init.xpToGive = 30, init.money = 0);
-    Enemy GiantRat("Giant Rat", init.health = 15, enemyInventory, init.xpToGive = 25, init.money = 0);
-    Enemy Raptor  ("Raptor",    init.health = 35, enemyInventory, init.xpToGive = 15, init.money = 0);
+    Enemy Dragon  ("Dragon",    init.health = 10, init.maxHealth = 70, enemyInventory, init.xpToGive = 40, init.money = 0);
+    Enemy Skeleton("Skeleton",  init.health = 10, init.maxHealth = 10, enemyInventory, init.xpToGive = 20, init.money = 0);
+    Enemy Troll   ("Troll",     init.health = 25, init.maxHealth = 25, enemyInventory, init.xpToGive = 30, init.money = 0);
+    Enemy GiantRat("Giant Rat", init.health = 15, init.maxHealth = 15, enemyInventory, init.xpToGive = 25, init.money = 0);
+    Enemy Raptor  ("Raptor",    init.health = 35, init.maxHealth = 35, enemyInventory, init.xpToGive = 15, init.money = 0);
 
 	//=================================================================================================
     //SET ENEMY ATTACKS
     //=================================================================================================
 
-    Dragon.SetAttackList(Punch);
-	Dragon.SetAttackList(BodySlam);
+    Dragon.GiveAttack(Punch);
+	Dragon.GiveAttack(BodySlam);
 
-    Skeleton.SetAttackList(Punch);
-    Skeleton.SetAttackList(BodySlam);
-    Skeleton.SetAttackList(Slash);
+    Skeleton.GiveAttack(Punch);
+    Skeleton.GiveAttack(BodySlam);
+    Skeleton.GiveAttack(Slash);
 
-	Troll.SetAttackList(Punch);
-    Troll.SetAttackList(BodySlam);
-    Troll.SetAttackList(Slash);
+	Troll.GiveAttack(Punch);
+    Troll.GiveAttack(BodySlam);
+    Troll.GiveAttack(Slash);
 
-    GiantRat.SetAttackList(BodySlam);
-    GiantRat.SetAttackList(Slash);
+    GiantRat.GiveAttack(BodySlam);
+    GiantRat.GiveAttack(Slash);
 
-    Raptor.SetAttackList(BodySlam);
-    Raptor.SetAttackList(Slash);
-    Raptor.SetAttackList(Kick);
+    Raptor.GiveAttack(BodySlam);
+    Raptor.GiveAttack(Slash);
+    Raptor.GiveAttack(Kick);
 
 	//=================================================================================================
     //SET ENEMIES IN CONTAINER FOR RANDOMIZATION
@@ -163,11 +165,11 @@ int main()
 
 	vector<Enemy> enemyContainer;
 
-    //enemyContainer.push_back(Dragon);
+    enemyContainer.push_back(Dragon);
     enemyContainer.push_back(Skeleton);
-    //enemyContainer.push_back(Troll);
-    //enemyContainer.push_back(GiantRat);
-    //enemyContainer.push_back(Raptor);
+    enemyContainer.push_back(Troll);
+    enemyContainer.push_back(GiantRat);
+    enemyContainer.push_back(Raptor);
 
 	//=================================================================================================
     //INITIALIZE SOME THINGS
@@ -199,6 +201,10 @@ int main()
         int randomEnemySelection = RandomNumber(generator, 0, enemyContainer.size() - 1);
         enemyContainer[randomEnemySelection];
 
+        //Set enemies health back to its max. If we dont do this, next time we encounter an enemy
+        //we defeated, it will have no health left.
+        enemyContainer[randomEnemySelection].ResetHealth();
+
         int randomItemSelection = RandomNumber(generator, 0, itemList.size() - 1);
         itemList[randomItemSelection];
    
@@ -209,7 +215,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.24.0 - 956 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.25.0 - 956 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
