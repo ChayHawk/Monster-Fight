@@ -28,11 +28,12 @@ class Player : public Character
         (
             const string& name,
             int health, 
+            int maxHealth,
             vector<tuple<Item, int>>& inventory,
             int money,
             int experience,
             int level
-        ) : Character{ name, health, inventory, money}, mExperience(experience), 
+        ) : Character{ name, health, maxHealth, inventory, money}, mExperience(experience), 
                                                         mCurrentLevel(level),
                                                         mKills(0)
         {}

@@ -25,10 +25,11 @@ class Enemy : public Character
         (
             const string& name,
             int health,
+            int maxHealth,
             vector<tuple<Item, int>>& inventory,
             int xpToGive,
             int money
-        ) : Character{ name, health, inventory, money}, mXpToGive(xpToGive)
+        ) : Character{ name, health, maxHealth, inventory, money}, mXpToGive(xpToGive)
         {}
 
         int GetXpToGive() const { return mXpToGive; }

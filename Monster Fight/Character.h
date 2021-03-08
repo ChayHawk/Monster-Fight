@@ -43,8 +43,9 @@ class Character
 
         void AddItemToInventory(Item& item, int amount);
         vector<Attack>& GetAttackList();
-        void SetAttackList(Attack& attack);
-        void SetCharacterList(Character& character) const;
+        void GiveAttack(Attack& attack);
+        
+        int GetMaxHealth() const { return MAX_HEALTH; }
 
         friend ostream& operator<<(ostream& os, const Character& character)
         {
@@ -60,10 +61,12 @@ class Character
         (
             const string& name, 
             int health, 
+            const int maxHealth,
             vector<tuple<Item, int>>& inventory,
             int money
         ) :     mName(name), 
-                mHealth(health), 
+                mHealth(health),
+                MAX_HEALTH(maxHealth),
                 mAttackList(0),
                 mInventory(inventory),
                 mMoney(money)
