@@ -99,9 +99,18 @@ void Character::UseItem()
         }
         else
         {
+			cout << "\n################################################################" << endl;
+            cout << "                          INVENTORY                        " << endl;
+            cout << "################################################################" << endl;
+
 			cout << "What item do you want to use? Type -1 to quit\n" << endl;
+			cout << GetName() << "'s current health is: " << mHealth << "\n" << endl;
 
             counter = 1;
+
+			//=================================================================================================
+            //DISPLAY INVENTORY
+            //=================================================================================================
 
             for (auto& i : mInventory)
             {
@@ -112,25 +121,26 @@ void Character::UseItem()
 
             counter = 1;
 
-            if (!cin.fail())
+			//=================================================================================================
+            //VALIDATE INPUT AND UPDATE INVENTORY WITH PLAYER CHOICE
+            //=================================================================================================
+
+            if (!cin.fail() && choice < mInventory.size() + 1)
             {
-                for (auto& j : mInventory)
+				//If amount of items owned is greater than 0, and health is not full
+                if (get<1>(mInventory[choice - 1]) > 0 && mHealth != MAX_HEALTH)
                 {
-				    //If amount of items owned is greater than 0, and health is not full
-                    if (get<1>(j) > 0 && mHealth != MAX_HEALTH)
-                    {
-					    cout << counter++ << ") " << get<0>(j) << " (" << --get<1>(j) << ")" << endl;
-                        Heal(get<0>(j).GetEffect());
-                        cout << "\n" << GetName() << "'s health restored to " << GetHealth() << "\n" << endl;;
-                    }
-                    else if (mHealth == MAX_HEALTH)
-                    {
-                        cout << "\nYou are already at full health.\n" << endl;
-                    }
-                    else
-                    {
-                        cout << "\nYou do not have enough " << get<0>(j) << "'s" << " to use\n" << endl;
-                    }
+                    get<1>(mInventory[choice - 1])--;
+                    Heal(get<0>(mInventory[choice - 1]).GetEffect());
+                    cout << "\n" << GetName() << "'s health restored to " << GetHealth() << "\n" << endl;;
+                }
+                else if (mHealth == MAX_HEALTH)
+                {
+                    cout << "\nYou are already at full health.\n" << endl;
+                }
+                else
+                {
+                    cout << "\nYou do not have enough " << get<0>(mInventory[choice - 1]).GetName() << "'s" << " to use\n" << endl;
                 }
             }
             else
