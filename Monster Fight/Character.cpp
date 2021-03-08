@@ -121,7 +121,11 @@ void Character::UseItem()
 
             counter = 1;
 
-            if (!cin.fail())
+			//=================================================================================================
+            //VALIDATE INPUT AND UPDATE INVENTORY WITH PLAYER CHOICE
+            //=================================================================================================
+
+            if (!cin.fail() && choice < mInventory.size() + 1)
             {
 				//If amount of items owned is greater than 0, and health is not full
                 if (get<1>(mInventory[choice - 1]) > 0 && mHealth != MAX_HEALTH)
