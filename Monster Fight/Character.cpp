@@ -132,7 +132,13 @@ void Character::UseItem()
                 {
                     get<1>(mInventory[choice - 1])--;
                     Heal(get<0>(mInventory[choice - 1]).GetEffect());
-                    cout << "\n" << GetName() << "'s health restored to " << GetHealth() << "\n" << endl;;
+                    cout << "\n" << GetName() << "'s health restored to " << GetHealth() << "\n" << endl;
+
+                    //Remove item from inventory if there is no more of it.
+                    if (get<1>(mInventory[choice - 1]) == 0)
+                    {
+                        mInventory.erase(mInventory.begin() + choice -1);
+                    }
                 }
                 else if (mHealth == MAX_HEALTH)
                 {
@@ -140,7 +146,7 @@ void Character::UseItem()
                 }
                 else
                 {
-                    cout << "\nYou do not have enough " << get<0>(mInventory[choice - 1]).GetName() << "'s" << " to use\n" << endl;
+                    cout << "\nYou do not have enough " << get<0>(mInventory[choice - 1]).GetName() << "'s" << " to use\n\n" << endl;
                 }
             }
             else
