@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.22.1
+// Version          : 0.23.1
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 948
+// Lines of Code    : 943
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -39,24 +39,6 @@ using std::streamsize;
 using std::getline;
 using std::tuple;
 using std::make_tuple;
-
-/*BUGS
-* 1. Items that have been randomly given to player do not restore health. - CLOSED
-* 2. Game will sometimes output "You are already at full health" 3 times. - OPEN
-*/
-
-/*ISSUES
-* 1. Need to delete items from inventory when no more of them exist.
-*    Also need to make it so when the player gets another of the
-*    same item, it adds it to the already existing item count
-*    instead of adding it in a new slot.
-*/
-
-/*TO DO
-* 1. Add a save and load feature.
-* 2. Allow player to name their character.
-* 3. Do some general cleanup and refactoring of the code base.
-*/
 
 //=================================================================================================
 //Use a struct to define constructor
@@ -109,7 +91,6 @@ int main()
     itemList.push_back(StrongPotion); 
     itemList.push_back(SuperPotion); 
 
-
     //=================================================================================================
     //SET PLAYER INVENTORY VECTOR
     //=================================================================================================
@@ -129,7 +110,7 @@ int main()
     Player Hero
     (
         "Disaster Chief", 
-        init.health = 100, 
+        init.health = 10, 
         playerInventory, 
         init.money = 0, 
         init.experience = 0, 
@@ -139,6 +120,9 @@ int main()
     Hero.SetAttackList(Punch);
     Hero.SetAttackList(BodySlam);
     Hero.SetAttackList(Slash);
+
+    Hero.AddItemToInventory(WeakPotion, 3);
+	Hero.AddItemToInventory(StrongPotion, 3);
 
     //=================================================================================================
     //CREATE ENEMIES
@@ -182,11 +166,11 @@ int main()
 
 	vector<Enemy> enemyContainer;
 
-    enemyContainer.push_back(Dragon);
+    //enemyContainer.push_back(Dragon);
     enemyContainer.push_back(Skeleton);
-    enemyContainer.push_back(Troll);
-    enemyContainer.push_back(GiantRat);
-    enemyContainer.push_back(Raptor);
+    //enemyContainer.push_back(Troll);
+    //enemyContainer.push_back(GiantRat);
+    //enemyContainer.push_back(Raptor);
 
     int choice{ 0 };
     int turn{ 1 };
@@ -222,11 +206,12 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.22.1 - 948 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.23.1 - 943 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
-        cout << "2) Quit" << endl;
+        cout << "2) Heal" << endl;
+        cout << "3) Quit" << endl;
 
         cout << "\n> ";
         cin >> choice;
@@ -245,7 +230,7 @@ int main()
             while (Hero.GetHealth() > 0)
             {
                 cout << "\n################################################################" << endl;
-                cout << "##" << "                     MONSTER FIGHT                          ##" << endl;
+                cout << "                     MONSTER FIGHT                        " << endl;
                 cout << "################################################################" << endl;
 
                 //=================================================================================================
@@ -405,7 +390,10 @@ int main()
                 break;
 
             case 2:
-                    return 0;
+				Hero.UseItem();
+                break;
+            case 3:
+				return 0;
                 break;
 
             default:
