@@ -142,6 +142,7 @@
     <ClCompile Include="Attack.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Monster Fight.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Attack.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>

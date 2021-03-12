@@ -1,7 +1,10 @@
-#pragma once
 // This is an independent project of an individual developer. Dear PVS-Studio, please check it.
 
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
+
+#ifndef PLAYER_H
+#define PLAYER_H
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -9,8 +12,7 @@
 #include <vector>
 #include <limits>
 
-#include "Attack.h"
-#include "Enemy.h"
+#include "Character.h"
 
 using std::cout;
 using std::cin;
@@ -21,6 +23,7 @@ using std::vector;
 using std::numeric_limits;
 using std::streamsize;
 
+
 class Player : public Character
 {
     public:
@@ -29,11 +32,10 @@ class Player : public Character
             const string& name,
             int health, 
             int maxHealth,
-            vector<tuple<Item, int>>& inventory,
             int money,
             int experience,
             int level
-        ) : Character{ name, health, maxHealth, inventory, money}, mExperience(experience), 
+        ) : Character{ name, health, maxHealth, money}, mExperience(experience), 
                                                         mCurrentLevel(level),
                                                         mKills(0)
         {}
@@ -61,7 +63,6 @@ class Player : public Character
             return os;
         }
 
-        static void TestLevellingAndXPSystem(); //For debugging
         void SetLevel(int setLevelTo); //For debugging
 
     private:
@@ -71,3 +72,5 @@ class Player : public Character
         const int xpMultiplier = 300;
 		int mKills{ 0 };
 };
+
+#endif

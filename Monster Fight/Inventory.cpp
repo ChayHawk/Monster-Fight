@@ -1,0 +1,107 @@
+// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
+
+#include "Inventory.h"
+#include "Player.h"
+
+void Inventory::Add(Item& item, int amount)
+{
+	IncrementItemsOwned(amount);
+	mInventory.push_back(item);
+}
+
+void Inventory::Open()
+{
+	for (auto& i : mInventory)
+	{
+		cout << "TEST: " << i.GetName() << "(" << mItemsOwned << ")";
+	}
+}
+
+void Inventory::Clear()
+{
+	mInventory.clear();
+}
+
+vector<Item>& Inventory::GetInventory()
+{
+	return mInventory;
+}
+
+void Inventory::UseItem(Player& Hero)
+{
+	int choice{ 0 };
+    int counter{ 1 };
+
+    while (choice != -1)
+    {
+		if (GetInventory().size() == 0)
+        {
+            cout << "You do not have any items to use." << endl;
+            choice = -1;
+        }
+        else
+        {
+			cout << "\n################################################################" << endl;
+            cout << "                          INVENTORY                        " << endl;
+            cout << "################################################################" << endl;
+
+			cout << "What item do you want to use? Type -1 to quit\n" << endl;
+			cout << Hero.GetName() << "'s current health is: " << Hero.GetHealth() << "\n" << endl;
+
+            counter = 1;
+
+			//=================================================================================================
+            //DISPLAY INVENTORY
+            //=================================================================================================
+
+            for (auto& i : GetInventory())
+            {
+                cout << counter++ << ") " << i.GetName() << " (" << GetItemsOwned() << ")" << " Effect: " << i.GetEffect() << endl;
+            }
+
+            cin >> choice;
+
+            counter = 1;
+
+			//=================================================================================================
+            //VALIDATE INPUT AND UPDATE INVENTORY WITH PLAYER CHOICE
+            //=================================================================================================
+
+            if (!cin.fail() && choice < GetInventory().size() + 1)
+            {
+				//If amount of items owned is greater than 0, and health is not full
+                if (GetItemsOwned() > 0 && Hero.GetHealth() != Hero.GetMaxHealth())
+                {
+                    DecrementItemsOwned(1);
+                    Hero.Heal(mInventory[choice -1].GetEffect());
+                    cout << "\n" << Hero.GetName() << "'s health restored to " << Hero.GetHealth() << "\n" << endl;
+
+                    //Create an index variable to make things a little easier to read.
+                    int index = choice - 1;
+
+                    //Remove item from inventory if there is no more of it.
+                    if (GetItemsOwned() == 0)
+                    {
+                        GetInventory().erase(GetInventory().begin() + index);
+                    }
+                }
+                else if (Hero.GetHealth() == Hero.GetMaxHealth())
+                {
+                    cout << "\nYou are already at full health.\n" << endl;
+                }
+                else
+                {
+                    cout << "\nYou do not have enough " << mInventory[choice].GetName() << "'s" << " to use\n\n" << endl;
+                }
+            }
+            else
+            {
+                cout << "Error, Invalid Input" << endl;
+			    cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            }   
+        }
+    }
+}
