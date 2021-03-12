@@ -1,7 +1,10 @@
-#pragma once
 // This is an independent project of an individual developer. Dear PVS-Studio, please check it.
 
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
+#pragma once
+
+#ifndef ATTACK_H
+#define ATTACK_H
 
 #include <iostream>
 #include <string>
@@ -10,6 +13,7 @@
 using std::endl;
 using std::ostream;
 using std::string;
+
 
 class Attack
 {
@@ -33,3 +37,5 @@ class Attack
         string mName{ "Attack Name" };
         int mPower{ 0 };
 };
+
+#endif

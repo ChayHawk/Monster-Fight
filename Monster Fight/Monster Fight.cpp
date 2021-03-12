@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.25.0
+// Version          : 0.26.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 956
+// Lines of Code    : 955
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -17,13 +17,7 @@
 #include <vector>
 #include <random>
 #include <limits>
-#include <tuple>
 
-#include "Character.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "Attack.h"
-#include "Item.h"
 
 using std::cout;
 using std::endl;
@@ -37,14 +31,17 @@ using std::cin;
 using std::numeric_limits;
 using std::streamsize;
 using std::getline;
-using std::tuple;
-using std::make_tuple;
+
+#include "Player.h"
+#include "Item.h"
+#include "Character.h"
+#include "Enemy.h"
+#include "Attack.h"
+#include "Inventory.h"
 
 //=================================================================================================
-//Use a struct to define constructor
-//object variables so we dont have magic numbers
-//and each number has a name associated
-//with it so we know what it does.
+//Use a struct to define constructor object variables so we dont have magic numbers and each number 
+//has a name associated with it so we know what it does.
 //=================================================================================================
 
 struct Init
@@ -92,17 +89,12 @@ int main()
     itemList.push_back(StrongPotion); 
     itemList.push_back(SuperPotion); 
 
-    //=================================================================================================
-    //SET PLAYER INVENTORY VECTOR
-    //=================================================================================================
-
-    vector<tuple<Item, int>> playerInventory;
-
-    //=================================================================================================
-    //SET ENEMY INVENTORY VECTOR
+	//=================================================================================================
+    //CREATE INVENTOIRIES AND SET VECTORS
     //=================================================================================================
 
-    vector<tuple<Item, int>> enemyInventory;
+    Inventory PlayerInventory;
+    Inventory EnemyInventory;
 
     //=================================================================================================
     //INSTANTIATE PLAYER CONSTRUCTOR
@@ -113,7 +105,6 @@ int main()
         "Disaster Chief",
         init.health = 100,
         init.maxHealth = 100,
-        playerInventory, 
         init.money = 0, 
         init.experience = 0, 
         init.level = 1
@@ -127,11 +118,11 @@ int main()
     //CREATE ENEMIES
     //=================================================================================================
 
-    Enemy Dragon  ("Dragon",    init.health = 10, init.maxHealth = 70, enemyInventory, init.xpToGive = 40, init.money = 0);
-    Enemy Skeleton("Skeleton",  init.health = 10, init.maxHealth = 10, enemyInventory, init.xpToGive = 20, init.money = 0);
-    Enemy Troll   ("Troll",     init.health = 25, init.maxHealth = 25, enemyInventory, init.xpToGive = 30, init.money = 0);
-    Enemy GiantRat("Giant Rat", init.health = 15, init.maxHealth = 15, enemyInventory, init.xpToGive = 25, init.money = 0);
-    Enemy Raptor  ("Raptor",    init.health = 35, init.maxHealth = 35, enemyInventory, init.xpToGive = 15, init.money = 0);
+    Enemy Dragon  ("Dragon",    init.health = 10, init.maxHealth = 70, init.xpToGive = 40, init.money = 0);
+    Enemy Skeleton("Skeleton",  init.health = 10, init.maxHealth = 10, init.xpToGive = 20, init.money = 0);
+    Enemy Troll   ("Troll",     init.health = 25, init.maxHealth = 25, init.xpToGive = 30, init.money = 0);
+    Enemy GiantRat("Giant Rat", init.health = 15, init.maxHealth = 15, init.xpToGive = 25, init.money = 0);
+    Enemy Raptor  ("Raptor",    init.health = 35, init.maxHealth = 35, init.xpToGive = 15, init.money = 0);
 
 	//=================================================================================================
     //SET ENEMY ATTACKS
@@ -154,6 +145,7 @@ int main()
     Raptor.GiveAttack(BodySlam);
     Raptor.GiveAttack(Slash);
     Raptor.GiveAttack(Kick);
+	Raptor.GiveAttack(Kick);
 
 	//=================================================================================================
     //SET ENEMIES IN CONTAINER FOR RANDOMIZATION
@@ -181,7 +173,9 @@ int main()
     int battles{ 0 };
     const int attackHitChance{ 8 };
 
-	Hero.AddItemToInventory(WeakPotion, 3);
+	PlayerInventory.Add(WeakPotion, 3);
+
+	PlayerInventory.Open();
 
     while (choice != -1)
     {
@@ -215,7 +209,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.25.0 - 956 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.26.0 - 955 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -246,9 +240,14 @@ int main()
                 //Player chooses Attack
                 //=================================================================================================
 
+				for (auto& i : Raptor.GetAttackList())
+                {
+					cout << "RAPTOR) " << i << endl;
+                }
+
                 int counter{ 1 };
                 int attackChoice{ 0 };
-
+                
                 cout << "\nUse what attack?\n" << endl;
 
 				for (auto& i : Hero.GetAttackList())
@@ -302,7 +301,7 @@ int main()
                     Hero.GiveMoney(enemyContainer[randomEnemySelection].GetMoney());
 
                     cout << enemyContainer[randomEnemySelection].GetName() << " dropped " << RandomNumber(generator, 1, 3) << " " << itemList[randomItemSelection].GetName() << "'s." << endl;
-                    Hero.AddItemToInventory(itemList[randomItemSelection], RandomNumber(generator, 1, 3));
+                    PlayerInventory.Add(itemList[randomItemSelection], RandomNumber(generator, 1, 3));
 
                     battles++;
                     Hero.IncrememntKillCounter();
@@ -386,7 +385,7 @@ int main()
 						continue;
                         break;
                     case 2:
-                        Hero.UseItem();
+                        PlayerInventory.UseItem(Hero);
                         break;
                     default:
 						cout << "\nInvalid Decision.\n" << endl;

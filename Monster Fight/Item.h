@@ -3,6 +3,10 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 
 #pragma once
+
+#ifndef ITEM_H
+#define ITEM_H
+
 #include <iostream>
 #include <string>
 #include <ostream>
@@ -28,8 +32,6 @@ class Item
 		friend ostream& operator<<(ostream& os, const Item& item)
         {
             os << item.GetName();
-            //os << item.GetCost() << endl;
-			//os << item.GetEffect() << endl;
 
             return os;
         }
@@ -40,3 +42,5 @@ class Item
 		int mEffect{ 0 }; //Effect can be used to give soemthing like health, ammo etc.
 		string mInfo{ "Item Info" }; //Not setup yet
 };
+
+#endif

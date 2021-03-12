@@ -3,13 +3,13 @@
 
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 
+#ifndef ENEMY_H
+#define ENEMY_H
+
 #include <iostream>
 #include <string>
 #include <ostream>
 #include <vector>
-
-#include "Attack.h"
-#include "Character.h"
 
 using std::endl;
 using std::ostream;
@@ -17,6 +17,7 @@ using std::string;
 using std::vector;
 
 class Character;
+class Inventory;
 
 class Enemy : public Character
 {
@@ -26,10 +27,9 @@ class Enemy : public Character
             const string& name,
             int health,
             int maxHealth,
-            vector<tuple<Item, int>>& inventory,
             int xpToGive,
             int money
-        ) : Character{ name, health, maxHealth, inventory, money}, mXpToGive(xpToGive)
+        ) : Character{ name, health, maxHealth, money}, mXpToGive(xpToGive)
         {}
 
         int GetXpToGive() const { return mXpToGive; }
@@ -38,3 +38,5 @@ class Enemy : public Character
     private:
         int mXpToGive{ 0 }; //How much XP the player will recieve when this enemy is defeated
 };
+
+#endif
