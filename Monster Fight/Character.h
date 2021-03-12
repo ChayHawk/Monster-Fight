@@ -34,7 +34,6 @@ class Character
         void GiveMoney(int amount);
         void ResetHealth();
 		void Heal(int amount);
-        void UseItem();
 
         vector<Attack>& GetAttackList();
         void GiveAttack(Attack& attack);

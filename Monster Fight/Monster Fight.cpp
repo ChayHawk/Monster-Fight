@@ -398,7 +398,7 @@ int main()
                 break;
 
             case 2:
-				Hero.UseItem();
+				PlayerInventory.UseItem(Hero);
                 break;
             case 3:
 				return 0;
