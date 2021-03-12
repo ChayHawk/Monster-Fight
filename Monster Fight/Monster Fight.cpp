@@ -33,11 +33,11 @@ using std::streamsize;
 using std::getline;
 
 #include "Player.h"
-#include "Item.h"
+#include "Inventory.h"
 #include "Character.h"
 #include "Enemy.h"
+#include "Item.h"
 #include "Attack.h"
-#include "Inventory.h"
 
 //=================================================================================================
 //Use a struct to define constructor object variables so we dont have magic numbers and each number 
@@ -239,11 +239,6 @@ int main()
                 //=================================================================================================
                 //Player chooses Attack
                 //=================================================================================================
-
-				for (auto& i : Raptor.GetAttackList())
-                {
-					cout << "RAPTOR) " << i << endl;
-                }
 
                 int counter{ 1 };
                 int attackChoice{ 0 };
