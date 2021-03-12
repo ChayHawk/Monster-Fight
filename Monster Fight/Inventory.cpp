@@ -3,6 +3,7 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 
 #include "Inventory.h"
+#include "Player.h"
 
 void Inventory::Add(Item& item, int amount)
 {
@@ -35,7 +36,7 @@ void Inventory::UseItem(Player& Hero)
 
     while (choice != -1)
     {
-		if (GetInventory().size())
+		if (GetInventory().size() == 0)
         {
             cout << "You do not have any items to use." << endl;
             choice = -1;
@@ -74,7 +75,7 @@ void Inventory::UseItem(Player& Hero)
                 if (GetItemsOwned() > 0 && Hero.GetHealth() != Hero.GetMaxHealth())
                 {
                     DecrementItemsOwned(1);
-                    Hero.Heal(mInventory[choice].GetEffect());
+                    Hero.Heal(mInventory[choice -1].GetEffect());
                     cout << "\n" << Hero.GetName() << "'s health restored to " << Hero.GetHealth() << "\n" << endl;
 
                     //Create an index variable to make things a little easier to read.

@@ -9,15 +9,20 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <limits>
 
 using std::cout;
 using std::endl;
+using std::cin;
 using std::string;
 using std::vector;
+using std::max;
+using std::numeric_limits;
+using std::streamsize;
 
-#include "Player.h"
 #include "Item.h"
 
+class Player;
 
 class Inventory
 {
@@ -33,6 +38,7 @@ class Inventory
 		vector<Item> mInventory{ 0 };
 		int amountOwned{ 0 };
 		int mItemsOwned{ 0 };
+		Item item;
 
 		int GetItemsOwned() const { return mItemsOwned; }
 		void SetItemsOwned(int amount) { mItemsOwned = amount; }

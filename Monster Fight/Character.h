@@ -11,15 +11,16 @@
 #include <ostream>
 #include <vector>
 
+#include "Item.h"
+#include "Attack.h"
+#include "Inventory.h"
+
 using std::cout;
 using std::endl;
 using std::cin;
 using std::ostream;
 using std::string;
 using std::vector;
-
-#include "Item.h"
-#include "Attack.h"
 
 class Enemy;
 

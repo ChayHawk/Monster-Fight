@@ -12,6 +12,8 @@
 #include <vector>
 #include <limits>
 
+#include "Character.h"
+
 using std::cout;
 using std::cin;
 using std::endl;
@@ -21,8 +23,6 @@ using std::vector;
 using std::numeric_limits;
 using std::streamsize;
 
-#include "Inventory.h"
-#include "Character.h"
 
 class Player : public Character
 {
