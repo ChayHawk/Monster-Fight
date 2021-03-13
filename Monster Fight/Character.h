@@ -15,45 +15,31 @@
 #include "Attack.h"
 #include "Inventory.h"
 
-using std::cout;
-using std::endl;
-using std::cin;
-using std::ostream;
-using std::string;
-using std::vector;
-
 class Enemy;
 
 class Character
 {
     public:
-        string GetName() const { return mName; }
-        int GetHealth() const { return mHealth; }
-        int GetMoney() const { return mMoney; }
+        std::string GetName() const;
+        int GetHealth() const;
+        int GetMaxHealth() const;
+		void ResetHealth();
+		void Heal(int amount);
+		void GiveMoney(int amount);
+        int GetMoney() const;
 
         void TakeDamage(int amount);
-        void GiveMoney(int amount);
-        void ResetHealth();
-		void Heal(int amount);
 
-        vector<Attack>& GetAttackList();
         void GiveAttack(Attack& attack);
-        
-        int GetMaxHealth() const { return MAX_HEALTH; }
+		std::vector<Attack>& GetAttackList();
 
-        friend ostream& operator<<(ostream& os, const Character& character)
-        {
-            os << character.GetName() << endl;
-            os << character.GetHealth() << endl;
+        friend std::ostream& operator<<(std::ostream& os, const Character& character);
 
-            return os;
-        }
-
-        //Protected because we dont want the user to create Characters, we want them to create players.
+    //Protected because we dont want the user to create Characters, we want them to create players.
     protected:
         Character
         (
-            const string& name, 
+            const std::string& name, 
             int health, 
             const int maxHealth,
             int money
@@ -66,9 +52,9 @@ class Character
         Character() = default;
 
     private:
-        string mName{ "Character Name" };
+        std::string mName{ "Character Name" };
         int mHealth{ 100 };
-        vector<Attack> mAttackList{ 0 };
+        std::vector<Attack> mAttackList{ 0 };
         Item item;
         int mMoney{ 10 };
 

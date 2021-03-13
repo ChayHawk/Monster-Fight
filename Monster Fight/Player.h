@@ -10,18 +10,8 @@
 #include <string>
 #include <ostream>
 #include <vector>
-#include <limits>
 
 #include "Character.h"
-
-using std::cout;
-using std::cin;
-using std::endl;
-using std::ostream;
-using std::string;
-using std::vector;
-using std::numeric_limits;
-using std::streamsize;
 
 
 class Player : public Character
@@ -29,7 +19,7 @@ class Player : public Character
     public:
         Player
         (
-            const string& name,
+            const std::string& name,
             int health, 
             int maxHealth,
             int money,
@@ -41,29 +31,20 @@ class Player : public Character
         {}
         Player() = default;
 
-        int GetCurrentExperience() const { return mExperience; }
+        int GetCurrentExperience() const;
         void GiveExperience(int amount);
         void IncrememntKillCounter();
-        int GetKillCount() const { return mKills; }
+        int GetKillCount() const;
 
         void LevelUp();
 
-        int GetLevel() const { return mCurrentLevel; }
-        int GetMaxLevel() const { return mMaxLevel; }
+        int GetLevel() const;
+        int GetMaxLevel() const;
 
         int CalculateExperience();
+		void SetLevel(int setLevelTo); //For debugging
 
-        friend ostream& operator<<(ostream& os, const Player& player)
-        {
-            os << player.GetMoney() << endl;
-            os << player.GetCurrentExperience() << endl;
-
-            os << static_cast<const Character&>(player);
-
-            return os;
-        }
-
-        void SetLevel(int setLevelTo); //For debugging
+        friend std::ostream& operator<<(std::ostream& os, const Player& player);
 
     private:
         int mExperience{ 0 };

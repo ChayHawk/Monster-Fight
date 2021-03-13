@@ -6,25 +6,16 @@
 #define ENEMY_H
 #pragma once
 
-#include <iostream>
 #include <string>
-#include <ostream>
-#include <vector>
 
-using std::endl;
-using std::ostream;
-using std::string;
-using std::vector;
-
-class Character;
-class Inventory;
+#include "Character.h"
 
 class Enemy : public Character
 {
     public:
         Enemy
         (
-            const string& name,
+            const std::string& name,
             int health,
             int maxHealth,
             int xpToGive,
@@ -32,7 +23,7 @@ class Enemy : public Character
         ) : Character{ name, health, maxHealth, money}, mXpToGive(xpToGive)
         {}
 
-        int GetXpToGive() const { return mXpToGive; }
+        int GetXpToGive() const;
         void XpToGive(int amount);
 
     private:

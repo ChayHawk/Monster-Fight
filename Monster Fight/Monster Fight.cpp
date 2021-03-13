@@ -94,7 +94,7 @@ int main()
     itemList.push_back(SuperPotion); 
 
 	//=================================================================================================
-    //CREATE INVENTOIRIES AND SET VECTORS
+    //CREATE INVENTOIRIES
     //=================================================================================================
 
     Inventory PlayerInventory;
@@ -195,14 +195,14 @@ int main()
         //chosen for the next battle. The same is done for money and XP as well.
 		//=================================================================================================
 
-        int randomEnemySelection = RandomNumber(generator, 0, enemyContainer.size() - 1);
+        size_t randomEnemySelection = RandomNumber(generator, 0, enemyContainer.size() - 1);
         enemyContainer[randomEnemySelection];
 
         //Set enemies health back to its max. If we dont do this, next time we encounter an enemy
         //we defeated, it will have no health left.
         enemyContainer[randomEnemySelection].ResetHealth();
 
-        int randomItemSelection = RandomNumber(generator, 0, itemList.size() - 1);
+        size_t randomItemSelection = RandomNumber(generator, 0, itemList.size() - 1);
         itemList[randomItemSelection];
    
         enemyContainer[randomEnemySelection].GiveMoney(RandomNumber(generator, 10, 100));
