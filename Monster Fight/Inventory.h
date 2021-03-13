@@ -11,15 +11,6 @@
 #include <vector>
 #include <limits>
 
-using std::cout;
-using std::endl;
-using std::cin;
-using std::string;
-using std::vector;
-using std::max;
-using std::numeric_limits;
-using std::streamsize;
-
 #include "Item.h"
 
 class Player;
@@ -35,7 +26,7 @@ class Inventory
 		void UseItem(Player& Hero);
 
 	private:
-		vector<std::pair<Item, int>> mInventory{ 0 };
+		std::vector<std::pair<Item, int>> mInventory{ 0 };
 		int mItemsOwned{ 0 };
 		Item item;
 
@@ -43,7 +34,7 @@ class Inventory
 		void IncrementItemsOwned(int amount, int index);
 		void DecrementItemsOwned(int amount, int index);
 
-		vector<std::pair<Item, int>>& GetInventory();
+		std::vector<std::pair<Item, int>>& GetInventory();
 };
 
 #endif

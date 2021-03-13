@@ -2,21 +2,28 @@
 
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
 
-#include <iostream>
-#include <string>
-#include <ostream>
-#include <limits>
-
 #include "Character.h"
 
-void Character::TakeDamage(int amount)
-{
-    mHealth -= amount;
+using std::cout;
+using std::endl;
+using std::cin;
+using std::ostream;
+using std::string;
+using std::vector;
+
+string Character::GetName() const 
+{ 
+    return mName; 
 }
 
-void Character::GiveMoney(int amount)
-{
-    mMoney += amount;
+int Character::GetHealth() const 
+{ 
+    return mHealth; 
+}
+
+int Character::GetMaxHealth() const 
+{ 
+    return MAX_HEALTH; 
 }
 
 //This will simply just set health to 100
@@ -37,9 +44,19 @@ void Character::Heal(int amount)
     }
 }
 
-vector<Attack>& Character::GetAttackList()
+void Character::GiveMoney(int amount)
 {
-    return mAttackList;
+    mMoney += amount;
+}
+
+int Character::GetMoney() const 
+{ 
+    return mMoney; 
+}
+
+void Character::TakeDamage(int amount)
+{
+    mHealth -= amount;
 }
 
 //This will allow each character to have their own moves, it will
@@ -49,4 +66,17 @@ vector<Attack>& Character::GetAttackList()
 void Character::GiveAttack(Attack& attack)
 {
 	mAttackList.push_back(attack);
+}
+
+vector<Attack>& Character::GetAttackList()
+{
+    return mAttackList;
+}
+
+ostream& operator<<(ostream& os, const Character& character)
+{
+    os << character.GetName() << endl;
+    os << character.GetHealth() << endl;
+
+    return os;
 }

@@ -5,6 +5,15 @@
 #include "Inventory.h"
 #include "Player.h"
 
+using std::cout;
+using std::endl;
+using std::cin;
+using std::string;
+using std::vector;
+using std::max;
+using std::numeric_limits;
+using std::streamsize;
+
 void Inventory::Add(Item& item, int amount)
 {
 	mInventory.push_back(std::make_pair(item, amount));

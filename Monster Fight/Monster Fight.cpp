@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.28.0
+// Version          : 0.30.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 981
+// Lines of Code    : 1073
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -17,6 +17,7 @@
 #include <vector>
 #include <random>
 #include <limits>
+#include <fstream>
 
 #include "Player.h"
 #include "Inventory.h"
@@ -38,6 +39,8 @@ using std::cin;
 using std::numeric_limits;
 using std::streamsize;
 using std::getline;
+using std::ofstream;
+using std::ifstream;
 
 //=================================================================================================
 //Use a struct to define constructor object variables so we dont have magic numbers and each number 
@@ -58,6 +61,7 @@ struct Init
 };
 
 int RandomNumber(default_random_engine generator, int first, int second);
+void Save(Player& Hero);
 
 int main()
 {
@@ -90,7 +94,7 @@ int main()
     itemList.push_back(SuperPotion); 
 
 	//=================================================================================================
-    //CREATE INVENTOIRIES AND SET VECTORS
+    //CREATE INVENTOIRIES
     //=================================================================================================
 
     Inventory PlayerInventory;
@@ -103,7 +107,7 @@ int main()
     Player Hero
     (
         "Disaster Chief",
-        init.health = 1,
+        init.health = 100,
         init.maxHealth = 100,
         init.money = 0,
         init.experience = 0, 
@@ -191,14 +195,14 @@ int main()
         //chosen for the next battle. The same is done for money and XP as well.
 		//=================================================================================================
 
-        int randomEnemySelection = RandomNumber(generator, 0, enemyContainer.size() - 1);
+        size_t randomEnemySelection = RandomNumber(generator, 0, enemyContainer.size() - 1);
         enemyContainer[randomEnemySelection];
 
         //Set enemies health back to its max. If we dont do this, next time we encounter an enemy
         //we defeated, it will have no health left.
         enemyContainer[randomEnemySelection].ResetHealth();
 
-        int randomItemSelection = RandomNumber(generator, 0, itemList.size() - 1);
+        size_t randomItemSelection = RandomNumber(generator, 0, itemList.size() - 1);
         itemList[randomItemSelection];
    
         enemyContainer[randomEnemySelection].GiveMoney(RandomNumber(generator, 10, 100));
@@ -208,12 +212,13 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.28.0 - 981 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.30.0 - 1073 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
         cout << "2) Heal" << endl;
-        cout << "3) Quit" << endl;
+        cout << "3) Save" << endl;
+        cout << "4) Quit" << endl;
 
         cout << "\n> ";
         cin >> choice;
@@ -227,6 +232,7 @@ int main()
             cout << "\n" << Hero.GetName() << " encountered a " << enemyContainer[randomEnemySelection].GetName() << "!" << endl;
             cout << "It has " << enemyContainer[randomEnemySelection].GetHealth() << " Health!\n" << endl;
 
+            //Reset turn back to 1
             turn = 1;
 
             while (Hero.GetHealth() > 0)
@@ -327,7 +333,6 @@ int main()
 
 					    Hero.TakeDamage(enemyContainer[randomEnemySelection].GetAttackList()[RandomNumber(generator, 0, enemyContainer[randomEnemySelection].GetAttackList().size() - 1)].GetPower());
                     }
-                    
                 }
 
 				//=================================================================================================
@@ -367,7 +372,7 @@ int main()
 
                 cout << "\n========================================================================\n" << endl;
 
-                cout << "Do What?\n" << endl;
+                cout << "What Now?\n" << endl;
 
                 cout << "1) Continue" << endl;
                 cout << "2) Heal" << endl;
@@ -395,6 +400,10 @@ int main()
 				PlayerInventory.UseItem(Hero);
                 break;
             case 3:
+                cout << "\nGame Saved\n" << endl;
+                Save(Hero);
+                break;
+            case 4:
 				return 0;
                 break;
 
@@ -413,4 +422,23 @@ int RandomNumber(default_random_engine generator, int first, int second)
     uniform_int_distribution<int> randomNum(first, second);
 
     return randomNum(generator);
+}
+
+void Save(Player& Hero)
+{
+    ofstream save("monster fight.txt");
+
+    save << Hero.GetHealth() << endl;
+    save << Hero.GetKillCount() << endl;
+    save << Hero.GetLevel() << endl;
+    save << Hero.GetMoney() << endl;
+}
+
+void Load(Player& Hero)
+{
+    ifstream load("monster fight.txt");
+
+    /*load >>
+    load >>
+    load >> Hero.SetLevel();*/
 }

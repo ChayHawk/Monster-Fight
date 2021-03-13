@@ -10,31 +10,20 @@
 #include <string>
 #include <ostream>
 
-using std::endl;
-using std::ostream;
-using std::string;
-
-
 class Attack
 {
     public:
-        Attack(const string& name, int power) : mName(name), mPower(power)
+        Attack(const std::string& name, int power) : mName(name), mPower(power)
         {}
         Attack() = default;
 
-        string GetName() const { return mName; }
-        int GetPower() const { return mPower; }
+        std::string GetName() const;
+        int GetPower() const;
 
-        friend ostream& operator<<(ostream& os, const Attack& attack)
-        {
-            os << attack.GetName() << " | Power: ";
-            os << attack.GetPower();
-
-            return os;
-        }
+        friend std::ostream& operator<<(std::ostream& os, const Attack& attack);
 
     private:
-        string mName{ "Attack Name" };
+        std::string mName{ "Attack Name" };
         int mPower{ 0 };
 };
 
