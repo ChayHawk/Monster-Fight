@@ -35,17 +35,15 @@ class Inventory
 		void UseItem(Player& Hero);
 
 	private:
-		vector<Item> mInventory{ 0 };
-		int amountOwned{ 0 };
+		vector<std::pair<Item, int>> mInventory{ 0 };
 		int mItemsOwned{ 0 };
 		Item item;
 
-		int GetItemsOwned() const { return mItemsOwned; }
-		void SetItemsOwned(int amount) { mItemsOwned = amount; }
-		void IncrementItemsOwned(int amount) { mItemsOwned += amount; }
-		void DecrementItemsOwned(int amount) { mItemsOwned -= amount; }
 
-		vector<Item>& GetInventory();
+		void IncrementItemsOwned(int amount, int index);
+		void DecrementItemsOwned(int amount, int index);
+
+		vector<std::pair<Item, int>>& GetInventory();
 };
 
 #endif
