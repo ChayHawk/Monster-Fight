@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.30.0
+// Version          : 0.31.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 1073
+// Lines of Code    : 1098
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -62,10 +62,16 @@ struct Init
 
 int RandomNumber(default_random_engine generator, int first, int second);
 void Save(Player& Hero);
+vector<int> Load(Player& Hero);
+void DisplayAttackMenu(Player& Hero);
 
 int main()
 {
     Init init;
+
+	//=================================================================================================
+    //INITIALIZE OUR CODE USED FOR RANDOMIZATION
+    //=================================================================================================
 
     random_device rd;
     default_random_engine generator(rd());
@@ -212,13 +218,14 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.30.0 - 1073 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.31.0 - 1098 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
         cout << "2) Heal" << endl;
         cout << "3) Save" << endl;
-        cout << "4) Quit" << endl;
+        cout << "4) Load" << endl;
+        cout << "5) Quit" << endl;
 
         cout << "\n> ";
         cin >> choice;
@@ -245,22 +252,10 @@ int main()
                 //Player chooses Attack
                 //=================================================================================================
 
-                int counter{ 1 };
                 int attackChoice{ 0 };
-                
-                cout << "\nUse what attack?\n" << endl;
 
-				for (auto& i : Hero.GetAttackList())
-                {
-                    if (Hero.GetAttackList().empty())
-                    {
-                        cout << Hero.GetName() << "'s attack list is empty!" << endl;
-                    }
-                    else
-                    {
-						cout << counter++ << ") " << i << endl;
-                    }
-                }
+                DisplayAttackMenu(Hero);
+            
                 cin >> attackChoice;
 
                 //Call generator to re-randomize
@@ -404,6 +399,28 @@ int main()
                 Save(Hero);
                 break;
             case 4:
+            {
+                //cout << "\nThis feature is currently non-functioning\n" << endl;
+                if (Load(Hero).size() == 0)
+                {
+                    cout << "No data could be loaded from file" << endl;
+                }
+                else
+                {
+                    cout << "Data restored" << endl;
+                    Player Hero
+                    (
+                        "Disaster Chief",
+                        init.health = Load(Hero)[0],
+                        init.maxHealth = 100,
+                        init.money = Load(Hero)[1],
+                        init.experience = Load(Hero)[2],
+                        init.level = Load(Hero)[3]
+                    );
+                }
+            }
+                break;
+            case 5:
 				return 0;
                 break;
 
@@ -429,16 +446,44 @@ void Save(Player& Hero)
     ofstream save("monster fight.txt");
 
     save << Hero.GetHealth() << endl;
+	save << Hero.GetMoney() << endl;
+    save << Hero.GetCurrentExperience();
+	save << Hero.GetLevel() << endl;
     save << Hero.GetKillCount() << endl;
-    save << Hero.GetLevel() << endl;
-    save << Hero.GetMoney() << endl;
 }
 
-void Load(Player& Hero)
+//Not working
+vector<int> Load(Player& Hero)
 {
+    vector<int> loadedData(6);
+
     ifstream load("monster fight.txt");
 
-    /*load >>
-    load >>
-    load >> Hero.SetLevel();*/
+
+	load >> loadedData[0];
+    load >> loadedData[1];
+    load >> loadedData[2];
+    load >> loadedData[3];
+    load >> loadedData[4];
+
+	return loadedData;
+}
+
+void DisplayAttackMenu(Player& Hero)
+{
+	int counter{ 1 };
+                
+    cout << "\nUse what attack?\n" << endl;
+
+	for (auto& i : Hero.GetAttackList())
+    {
+        if (Hero.GetAttackList().empty())
+        {
+            cout << Hero.GetName() << "'s attack list is empty!" << endl;
+        }
+        else
+        {
+			cout << counter++ << ") " << i << endl;
+        }
+    }
 }

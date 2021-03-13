@@ -42,7 +42,6 @@ class Player : public Character
         int GetMaxLevel() const;
 
         int CalculateExperience();
-		void SetLevel(int setLevelTo); //For debugging
 
         friend std::ostream& operator<<(std::ostream& os, const Player& player);
 
