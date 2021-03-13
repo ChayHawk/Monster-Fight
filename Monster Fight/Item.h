@@ -31,6 +31,7 @@ class Item
         {
             os << item.GetName();
 
+
             return os;
         }
 

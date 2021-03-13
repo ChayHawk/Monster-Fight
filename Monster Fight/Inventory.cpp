@@ -7,26 +7,35 @@
 
 void Inventory::Add(Item& item, int amount)
 {
-	IncrementItemsOwned(amount);
-	mInventory.push_back(item);
+	mInventory.push_back(std::make_pair(item, amount));
 }
 
 void Inventory::Open()
 {
 	for (auto& i : mInventory)
 	{
-		cout << "TEST: " << i.GetName() << "(" << mItemsOwned << ")";
+		cout << i.first.GetName() << "(" << i.second << ")";
 	}
 }
 
 void Inventory::Clear()
 {
-	mInventory.clear();
+    GetInventory().clear();
 }
 
-vector<Item>& Inventory::GetInventory()
+vector<std::pair<Item, int>>& Inventory::GetInventory()
 {
 	return mInventory;
+}
+
+void Inventory::DecrementItemsOwned(int amount, int index) 
+{ 
+    mInventory[index -1].second -= amount;
+}
+
+void Inventory::IncrementItemsOwned(int amount, int index)
+{
+    mInventory[index - 1].second += amount;
 }
 
 void Inventory::UseItem(Player& Hero)
@@ -58,7 +67,7 @@ void Inventory::UseItem(Player& Hero)
 
             for (auto& i : GetInventory())
             {
-                cout << counter++ << ") " << i.GetName() << " (" << GetItemsOwned() << ")" << " Effect: " << i.GetEffect() << endl;
+                cout << counter++ << ") " << i.first.GetName() << " (" << i.second << ")" << " Effect: " << i.first.GetEffect() << endl;
             }
 
             cin >> choice;
@@ -72,17 +81,17 @@ void Inventory::UseItem(Player& Hero)
             if (!cin.fail() && choice < GetInventory().size() + 1)
             {
 				//If amount of items owned is greater than 0, and health is not full
-                if (GetItemsOwned() > 0 && Hero.GetHealth() != Hero.GetMaxHealth())
+                if (mInventory[choice -1].second > 0 && Hero.GetHealth() != Hero.GetMaxHealth())
                 {
-                    DecrementItemsOwned(1);
-                    Hero.Heal(mInventory[choice -1].GetEffect());
+                    DecrementItemsOwned(1, choice);
+                    Hero.Heal(mInventory[choice -1].first.GetEffect());
                     cout << "\n" << Hero.GetName() << "'s health restored to " << Hero.GetHealth() << "\n" << endl;
 
                     //Create an index variable to make things a little easier to read.
                     int index = choice - 1;
 
                     //Remove item from inventory if there is no more of it.
-                    if (GetItemsOwned() == 0)
+                    if (mInventory[choice -1].second == 0)
                     {
                         GetInventory().erase(GetInventory().begin() + index);
                     }
@@ -93,7 +102,7 @@ void Inventory::UseItem(Player& Hero)
                 }
                 else
                 {
-                    cout << "\nYou do not have enough " << mInventory[choice].GetName() << "'s" << " to use\n\n" << endl;
+                    cout << "\nYou do not have enough " << mInventory[choice].first.GetName() << "'s" << " to use\n\n" << endl;
                 }
             }
             else

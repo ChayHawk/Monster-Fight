@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.27.0
+// Version          : 0.28.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 974
+// Lines of Code    : 981
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -17,6 +17,13 @@
 #include <vector>
 #include <random>
 #include <limits>
+
+#include "Player.h"
+#include "Inventory.h"
+#include "Character.h"
+#include "Enemy.h"
+#include "Item.h"
+#include "Attack.h"
 
 
 using std::cout;
@@ -31,13 +38,6 @@ using std::cin;
 using std::numeric_limits;
 using std::streamsize;
 using std::getline;
-
-#include "Player.h"
-#include "Inventory.h"
-#include "Character.h"
-#include "Enemy.h"
-#include "Item.h"
-#include "Attack.h"
 
 //=================================================================================================
 //Use a struct to define constructor object variables so we dont have magic numbers and each number 
@@ -174,8 +174,7 @@ int main()
     const int attackHitChance{ 8 };
 
 	PlayerInventory.Add(WeakPotion, 3);
-
-	PlayerInventory.Open();
+    PlayerInventory.Add(SuperPotion, 4);
 
     while (choice != -1)
     {
@@ -209,7 +208,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.27.0 - 974 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.28.0 - 981 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
