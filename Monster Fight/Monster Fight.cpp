@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.31.0
+// Version          : 0.32.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 1098
+// Lines of Code    : 1,098
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -61,8 +61,8 @@ struct Init
 };
 
 int RandomNumber(default_random_engine generator, int first, int second);
-void Save(Player& Hero);
-vector<int> Load(Player& Hero);
+void Save(Player& Hero, Inventory& inventory);
+vector<int> Load();
 void DisplayAttackMenu(Player& Hero);
 
 int main()
@@ -109,8 +109,8 @@ int main()
     //=================================================================================================
     //INSTANTIATE PLAYER CONSTRUCTOR
     //=================================================================================================
-    
-    Player Hero
+
+	Player Hero
     (
         "Disaster Chief",
         init.health = 100,
@@ -218,7 +218,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.31.0 - 1098 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.32.0 - 1,098 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -396,28 +396,11 @@ int main()
                 break;
             case 3:
                 cout << "\nGame Saved\n" << endl;
-                Save(Hero);
+                Save(Hero, PlayerInventory);
                 break;
             case 4:
             {
-                //cout << "\nThis feature is currently non-functioning\n" << endl;
-                if (Load(Hero).size() == 0)
-                {
-                    cout << "No data could be loaded from file" << endl;
-                }
-                else
-                {
-                    cout << "Data restored" << endl;
-                    Player Hero
-                    (
-                        "Disaster Chief",
-                        init.health = Load(Hero)[0],
-                        init.maxHealth = 100,
-                        init.money = Load(Hero)[1],
-                        init.experience = Load(Hero)[2],
-                        init.level = Load(Hero)[3]
-                    );
-                }
+                cout << "Functionality not working." << endl;
             }
                 break;
             case 5:
@@ -441,7 +424,7 @@ int RandomNumber(default_random_engine generator, int first, int second)
     return randomNum(generator);
 }
 
-void Save(Player& Hero)
+void Save(Player& Hero, Inventory& inventory)
 {
     ofstream save("monster fight.txt");
 
@@ -450,17 +433,20 @@ void Save(Player& Hero)
     save << Hero.GetCurrentExperience();
 	save << Hero.GetLevel() << endl;
     save << Hero.GetKillCount() << endl;
+
+    for (auto& i : inventory.GetInventory())
+    {
+        save << i.first << " " << i.second << endl;
+    }
 }
 
-//Not working
-vector<int> Load(Player& Hero)
+vector<int> Load()
 {
     vector<int> loadedData(6);
 
     ifstream load("monster fight.txt");
 
-
-	load >> loadedData[0];
+    load >> loadedData[0];
     load >> loadedData[1];
     load >> loadedData[2];
     load >> loadedData[3];
