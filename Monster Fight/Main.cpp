@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.33.0
+// Version          : 0.34.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 1,121
+// Lines of Code    : 1,151
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -70,11 +70,11 @@ struct UserInterface
     int battles{ 0 };
 };
 
+
 int RandomNumber(default_random_engine generator, int first, int second);
 void Save(Player& Hero, Inventory& inventory);
 vector<int> Load();
 
-void RandomNumberTesting();
 
 int main()
 {
@@ -87,8 +87,6 @@ int main()
 
     random_device rd;
     default_random_engine generator(rd());
-
-	RandomNumberTesting();
 
     //=================================================================================================
     //CREATE ATTACKS AND SET VECTORS
@@ -194,6 +192,11 @@ int main()
     int choice{ 0 };
     const int attackHitChance{ 8 }; //80% chance
 
+	const int common = 100;
+    const int uncommon = 30;
+    const int rare = 10;
+    int itemRarity{ 0 };
+
 	PlayerInventory.Add(WeakPotion, 3);
     PlayerInventory.Add(SuperPotion, 4);
 
@@ -229,11 +232,13 @@ int main()
         //Randomize XP to give to player
         enemyRoster[randomEnemy].XpToGive(RandomNumber(generator, 10, 60));
 
+        itemRarity = RandomNumber(generator, 0, 100);
+
         //=================================================================================================
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.33.0 - 1,121 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.34.0 - 1,151 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -273,8 +278,12 @@ int main()
             
                 cin >> attackChoice;
 
+                cout << "ITEM RARITY: " << itemRarity << endl;
+
                 //Call generator to re-randomize
 				generator();
+
+				cout << "ITEM RARITY: " << itemRarity << endl;
 
 				//=================================================================================================
                 //See if attack missed and if not, then
@@ -312,12 +321,26 @@ int main()
                     Hero.LevelUp();
                     Hero.GiveMoney(enemyRoster[randomEnemy].GetMoney());
 
-                    cout << enemyRoster[randomEnemy].GetName() << " dropped " << RandomNumber(generator, 1, 3) 
-                         << " " << itemList[randomItem].GetName() << "'s." << endl;
+                    cout << enemyRoster[randomEnemy].GetName() << " dropped " << RandomNumber(generator, 1, 3)
+                        << " " << itemList[randomItem].GetName() << "'s." << endl;
 
+					//Randomize Item given based on rarity
+                    //TO DO: Make functions of each rarity with
+                    //options to choose rarity level.
+                    if (itemRarity > uncommon && itemRarity <= common)
+                    {
+                        PlayerInventory.Add(WeakPotion, RandomNumber(generator, 1, 7));
+                    }
+		            if (itemRarity > rare && itemRarity <= uncommon)
+                    {
+						PlayerInventory.Add(StrongPotion, RandomNumber(generator, 1, 4));
+                    }
+		            if (itemRarity <= rare)
+                    {
+						PlayerInventory.Add(SuperPotion, RandomNumber(generator, 1, 2));
+                    }
 
-                    //Randomize Item given
-                    PlayerInventory.Add(itemList[randomItem], RandomNumber(generator, 1, 3));
+                    //PlayerInventory.Add(itemList[randomItem], RandomNumber(generator, 1, 3));
 
                     UI.battles++;
 
@@ -410,17 +433,20 @@ int main()
 
             case 2:
 				PlayerInventory.UseItem(Hero);
+
                 break;
             case 3:
                 cout << "\nGame Saved\n" << endl;
                 Save(Hero, PlayerInventory);
+
                 break;
             case 4:
-            {
                 cout << "Functionality not working." << endl;
-            }
+
                 break;
             case 5:
+                cout << "\n\nGoodbye\n\n" << endl;
+
 				return 0;
                 break;
 
@@ -501,71 +527,4 @@ void UserInterface::DisplayPlayerStats(Player& Hero)
     cout << Hero.GetName() << "'s Gold:       " << Hero.GetMoney() << endl;
     cout << Hero.GetName() << "'s Experience: " << Hero.GetCurrentExperience() << "/" << Hero.CalculateExperience() << endl;
     cout << Hero.GetName() << "'s Level:      " << Hero.GetLevel() << "/" << Hero.GetMaxLevel() << endl;
-}
-
-void CheckRarity(int rarityName)
-{
-    for (int i = 0; i < rarityName; i++)
-    {
-
-    }
-}
-
-void RandomNumberTesting()
-{
-    while (true)
-    {
-		random_device rd;
-        default_random_engine generator(rd());
-
-	    int itemRarity = RandomNumber(generator, 0, 100);
-
-        int common = 100;
-        int uncommon = 30;
-        int rare = 10;
-        int lastRandomNumber{ -1 };
-
-        bool randomizationDone{ false };
-
-        cout << "\nItem Rarity Number: " << itemRarity << endl;
-
-        cout << "Common: " << common << endl;
-        cout << "Uncommon: " << uncommon << endl;
-        cout << "Rare: " << rare << endl;
-
-        //Set last value so if the randomizer chooses the same number
-        //again, we can re-roll randomization. We dont want the game to
-        //Set this value until we're done with our turn so we gate it
-        //with a boolean.
-
-        cout << "\nrandomizationDone value is: " << std::boolalpha << randomizationDone << "\n" << endl;
-
-        if (randomizationDone == true)
-        {
-			lastRandomNumber = itemRarity;
-        }
-
-		cout << "\lastRandomNumber value is: " << std::boolalpha << lastRandomNumber << "\n" << endl;
-
-        if (itemRarity > uncommon && itemRarity <= common)
-        {
-            cout << "\nCommon Chosenn\n" << endl;
-
-            randomizationDone == true;
-        }
-		if (itemRarity > rare && itemRarity <= uncommon)
-        {
-            cout << "\nUncommon Chosenn\n" << endl;
-
-			randomizationDone == true;
-        }
-		if (itemRarity <= rare)
-        {
-            cout << "\nRare Chosenn\n" << endl;
-
-			randomizationDone == true;
-        }
-
-		cin.get();
-    }
 }
