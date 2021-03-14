@@ -74,6 +74,8 @@ int RandomNumber(default_random_engine generator, int first, int second);
 void Save(Player& Hero, Inventory& inventory);
 vector<int> Load();
 
+void RandomNumberTesting();
+
 int main()
 {
     Init init;
@@ -85,6 +87,8 @@ int main()
 
     random_device rd;
     default_random_engine generator(rd());
+
+	RandomNumberTesting();
 
     //=================================================================================================
     //CREATE ATTACKS AND SET VECTORS
@@ -311,6 +315,8 @@ int main()
                     cout << enemyRoster[randomEnemy].GetName() << " dropped " << RandomNumber(generator, 1, 3) 
                          << " " << itemList[randomItem].GetName() << "'s." << endl;
 
+
+                    //Randomize Item given
                     PlayerInventory.Add(itemList[randomItem], RandomNumber(generator, 1, 3));
 
                     UI.battles++;
@@ -495,4 +501,71 @@ void UserInterface::DisplayPlayerStats(Player& Hero)
     cout << Hero.GetName() << "'s Gold:       " << Hero.GetMoney() << endl;
     cout << Hero.GetName() << "'s Experience: " << Hero.GetCurrentExperience() << "/" << Hero.CalculateExperience() << endl;
     cout << Hero.GetName() << "'s Level:      " << Hero.GetLevel() << "/" << Hero.GetMaxLevel() << endl;
+}
+
+void CheckRarity(int rarityName)
+{
+    for (int i = 0; i < rarityName; i++)
+    {
+
+    }
+}
+
+void RandomNumberTesting()
+{
+    while (true)
+    {
+		random_device rd;
+        default_random_engine generator(rd());
+
+	    int itemRarity = RandomNumber(generator, 0, 100);
+
+        int common = 100;
+        int uncommon = 30;
+        int rare = 10;
+        int lastRandomNumber{ -1 };
+
+        bool randomizationDone{ false };
+
+        cout << "\nItem Rarity Number: " << itemRarity << endl;
+
+        cout << "Common: " << common << endl;
+        cout << "Uncommon: " << uncommon << endl;
+        cout << "Rare: " << rare << endl;
+
+        //Set last value so if the randomizer chooses the same number
+        //again, we can re-roll randomization. We dont want the game to
+        //Set this value until we're done with our turn so we gate it
+        //with a boolean.
+
+        cout << "\nrandomizationDone value is: " << std::boolalpha << randomizationDone << "\n" << endl;
+
+        if (randomizationDone == true)
+        {
+			lastRandomNumber = itemRarity;
+        }
+
+		cout << "\lastRandomNumber value is: " << std::boolalpha << lastRandomNumber << "\n" << endl;
+
+        if (itemRarity > uncommon && itemRarity <= common)
+        {
+            cout << "\nCommon Chosenn\n" << endl;
+
+            randomizationDone == true;
+        }
+		if (itemRarity > rare && itemRarity <= uncommon)
+        {
+            cout << "\nUncommon Chosenn\n" << endl;
+
+			randomizationDone == true;
+        }
+		if (itemRarity <= rare)
+        {
+            cout << "\nRare Chosenn\n" << endl;
+
+			randomizationDone == true;
+        }
+
+		cin.get();
+    }
 }
