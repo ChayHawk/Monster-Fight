@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.33.0
+// Version          : 0.35.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 1,121
+// Lines of Code    : 1,156
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -51,7 +51,6 @@ struct Init
 {
     int attackPower{ 0 };
     int money{ 0 };
-    int cost{ 0 };
     int effect{ 0 };
     int health{ 0 };
     int maxHealth{ 0 };
@@ -70,9 +69,11 @@ struct UserInterface
     int battles{ 0 };
 };
 
+
 int RandomNumber(default_random_engine generator, int first, int second);
 void Save(Player& Hero, Inventory& inventory);
 vector<int> Load();
+
 
 int main()
 {
@@ -99,15 +100,19 @@ int main()
     //CREATE ITEMS AND SET VECTOR
     //=================================================================================================
 
-    Item WeakPotion  ("Weak Potion",   init.cost = 20, init.effect = 10);
-    Item StrongPotion("Strong Potion", init.cost = 40, init.effect = 25);
-    Item SuperPotion ("Super Potion",  init.cost = 65, init.effect = 45);
+    Item WeakPotion  ("Weak Potion",   init.effect = 10);
+    Item StrongPotion("Strong Potion", init.effect = 20);
+    Item SuperPotion ("Super Potion",  init.effect = 35);
+    Item UltraPotion ("Ultra Potion",  init.effect = 50);
+    Item MaxPotion   ("Max Potion",    init.effect = 100);
 
     vector<Item> itemList;
 
     itemList.push_back(WeakPotion); 
     itemList.push_back(StrongPotion); 
     itemList.push_back(SuperPotion); 
+    itemList.push_back(UltraPotion); 
+    itemList.push_back(MaxPotion); 
 
 	//=================================================================================================
     //CREATE INVENTOIRIES
@@ -190,6 +195,11 @@ int main()
     int choice{ 0 };
     const int attackHitChance{ 8 }; //80% chance
 
+	const int common = 100;
+    const int uncommon = 30;
+    const int rare = 10;
+    int itemRarity{ 0 };
+
 	PlayerInventory.Add(WeakPotion, 3);
     PlayerInventory.Add(SuperPotion, 4);
 
@@ -225,11 +235,13 @@ int main()
         //Randomize XP to give to player
         enemyRoster[randomEnemy].XpToGive(RandomNumber(generator, 10, 60));
 
+        itemRarity = RandomNumber(generator, 0, 100);
+
         //=================================================================================================
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.33.0 - 1,121 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.35.0 - 1,156 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -269,8 +281,12 @@ int main()
             
                 cin >> attackChoice;
 
+                cout << "ITEM RARITY: " << itemRarity << endl;
+
                 //Call generator to re-randomize
 				generator();
+
+				cout << "ITEM RARITY: " << itemRarity << endl;
 
 				//=================================================================================================
                 //See if attack missed and if not, then
@@ -308,10 +324,27 @@ int main()
                     Hero.LevelUp();
                     Hero.GiveMoney(enemyRoster[randomEnemy].GetMoney());
 
-                    cout << enemyRoster[randomEnemy].GetName() << " dropped " << RandomNumber(generator, 1, 3) 
-                         << " " << itemList[randomItem].GetName() << "'s." << endl;
+                    cout << enemyRoster[randomEnemy].GetName() << " dropped " << RandomNumber(generator, 1, 3)
+                        << " " << itemList[randomItem].GetName() << "'s." << endl;
 
-                    PlayerInventory.Add(itemList[randomItem], RandomNumber(generator, 1, 3));
+					//Randomize Item given based on rarity
+                    //TO DO: Make functions of each rarity with
+                    //options to choose rarity level.
+
+                    if (itemRarity > uncommon && itemRarity <= common)
+                    {
+                        PlayerInventory.Add(WeakPotion, RandomNumber(generator, 1, 7));
+                    }
+		            if (itemRarity > rare && itemRarity <= uncommon)
+                    {
+						PlayerInventory.Add(StrongPotion, RandomNumber(generator, 1, 4));
+                    }
+		            if (itemRarity <= rare)
+                    {
+						PlayerInventory.Add(SuperPotion, RandomNumber(generator, 1, 2));
+                    }
+
+                    //PlayerInventory.Add(itemList[randomItem], RandomNumber(generator, 1, 3));
 
                     UI.battles++;
 
@@ -404,17 +437,20 @@ int main()
 
             case 2:
 				PlayerInventory.UseItem(Hero);
+
                 break;
             case 3:
                 cout << "\nGame Saved\n" << endl;
                 Save(Hero, PlayerInventory);
+
                 break;
             case 4:
-            {
                 cout << "Functionality not working." << endl;
-            }
+
                 break;
             case 5:
+                cout << "\n\nGoodbye\n\n" << endl;
+
 				return 0;
                 break;
 

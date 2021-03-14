@@ -11,12 +11,11 @@
 class Item
 {
 	public:
-		Item(const std::string& name, int cost, int effect): mName(name), mCost(cost), mEffect(effect)
+		Item(const std::string& name, int effect): mName(name), mEffect(effect)
 		{}
 		Item() = default;
 
 		std::string GetName() const;
-		int GetCost() const;
 		int GetEffect() const;
 		std::string GetInfo() const;
 		void SetInfo(const std::string& info);
@@ -25,7 +24,6 @@ class Item
 
 	private:
 		std::string mName{ "Item Name" };
-		int mCost{ 0 };
 		int mEffect{ 0 }; //Effect can be used to give soemthing like health, ammo etc.
 		std::string mInfo{ "Item Info" }; //Not setup yet
 };

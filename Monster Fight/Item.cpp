@@ -12,11 +12,6 @@ string Item::GetName() const
 	return mName; 
 }
 
-int Item::GetCost() const 
-{ 
-	return mCost; 
-}
-
 int Item::GetEffect() const 
 { 
 	return mEffect; 
