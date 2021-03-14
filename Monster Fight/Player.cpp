@@ -67,11 +67,6 @@ int Player::CalculateExperience()
     return xpMultiplier * mCurrentLevel;
 }
 
-void Player::SetLevel(int setLevelTo)
-{
-    mCurrentLevel = setLevelTo;
-}
-
 ostream& operator<<(ostream& os, const Player& player)
 {
     os << player.GetMoney() << endl;
