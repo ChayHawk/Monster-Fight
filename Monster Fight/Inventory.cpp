@@ -86,40 +86,46 @@ void Inventory::UseItem(Player& Hero)
 			//=================================================================================================
             //VALIDATE INPUT AND UPDATE INVENTORY WITH PLAYER CHOICE
             //=================================================================================================
-
-            if (!cin.fail() && choice < GetInventory().size() + 1)
+            if (choice == -1)
             {
-				//If amount of items owned is greater than 0, and health is not full
-                if (mInventory[choice -1].second > 0 && Hero.GetHealth() != Hero.GetMaxHealth())
-                {
-                    DecrementItemsOwned(1, choice);
-                    Hero.Heal(mInventory[choice -1].first.GetEffect());
-                    cout << "\n" << Hero.GetName() << "'s health restored to " << Hero.GetHealth() << "\n" << endl;
-
-                    //Create an index variable to make things a little easier to read.
-                    int index = choice - 1;
-
-                    //Remove item from inventory if there is no more of it.
-                    if (mInventory[choice -1].second == 0)
-                    {
-                        GetInventory().erase(GetInventory().begin() + index);
-                    }
-                }
-                else if (Hero.GetHealth() == Hero.GetMaxHealth())
-                {
-                    cout << "\nYou are already at full health.\n" << endl;
-                }
-                else
-                {
-                    cout << "\nYou do not have enough " << mInventory[choice].first.GetName() << "'s" << " to use\n\n" << endl;
-                }
+                break;
             }
             else
             {
-                cout << "Error, Invalid Input" << endl;
-			    cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            }   
+				if (!cin.fail() && choice < GetInventory().size() + 1)
+                {
+				    //If amount of items owned is greater than 0, and health is not full
+                    if (mInventory[choice -1].second > 0 && Hero.GetHealth() != Hero.GetMaxHealth())
+                    {
+                        DecrementItemsOwned(1, choice);
+                        Hero.Heal(mInventory[choice -1].first.GetEffect());
+                        cout << "\n" << Hero.GetName() << "'s health restored to " << Hero.GetHealth() << "\n" << endl;
+
+                        //Create an index variable to make things a little easier to read.
+                        int index = choice - 1;
+
+                        //Remove item from inventory if there is no more of it.
+                        if (mInventory[choice -1].second == 0)
+                        {
+                            GetInventory().erase(GetInventory().begin() + index);
+                        }
+                    }
+                    else if (Hero.GetHealth() == Hero.GetMaxHealth())
+                    {
+                        cout << "\nYou are already at full health.\n" << endl;
+                    }
+                    else
+                    {
+                        cout << "\nYou do not have enough " << mInventory[choice].first.GetName() << "'s" << " to use\n\n" << endl;
+                    }
+                }
+                else
+                {
+                    cout << "Error, Invalid Input" << endl;
+			        cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                }       
+            }
         }
     }
 }

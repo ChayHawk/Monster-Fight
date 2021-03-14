@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.34.0
+// Version          : 0.35.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 1,151
+// Lines of Code    : 1,156
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -51,7 +51,6 @@ struct Init
 {
     int attackPower{ 0 };
     int money{ 0 };
-    int cost{ 0 };
     int effect{ 0 };
     int health{ 0 };
     int maxHealth{ 0 };
@@ -101,15 +100,19 @@ int main()
     //CREATE ITEMS AND SET VECTOR
     //=================================================================================================
 
-    Item WeakPotion  ("Weak Potion",   init.cost = 20, init.effect = 10);
-    Item StrongPotion("Strong Potion", init.cost = 40, init.effect = 25);
-    Item SuperPotion ("Super Potion",  init.cost = 65, init.effect = 45);
+    Item WeakPotion  ("Weak Potion",   init.effect = 10);
+    Item StrongPotion("Strong Potion", init.effect = 20);
+    Item SuperPotion ("Super Potion",  init.effect = 35);
+    Item UltraPotion ("Ultra Potion",  init.effect = 50);
+    Item MaxPotion   ("Max Potion",    init.effect = 100);
 
     vector<Item> itemList;
 
     itemList.push_back(WeakPotion); 
     itemList.push_back(StrongPotion); 
     itemList.push_back(SuperPotion); 
+    itemList.push_back(UltraPotion); 
+    itemList.push_back(MaxPotion); 
 
 	//=================================================================================================
     //CREATE INVENTOIRIES
@@ -238,7 +241,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.34.0 - 1,151 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.35.0 - 1,156 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -327,6 +330,7 @@ int main()
 					//Randomize Item given based on rarity
                     //TO DO: Make functions of each rarity with
                     //options to choose rarity level.
+
                     if (itemRarity > uncommon && itemRarity <= common)
                     {
                         PlayerInventory.Add(WeakPotion, RandomNumber(generator, 1, 7));
