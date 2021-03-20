@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 #include <limits>
+#include <utility>
+#include <iterator>
 
 #include "Item.h"
 
@@ -26,6 +28,7 @@ class Inventory
 		void UseItem(Player& Hero);
 
 		std::vector<std::pair<Item, int>>& GetInventory();
+
 
 	private:
 		std::vector<std::pair<Item, int>> mInventory{ 0 };

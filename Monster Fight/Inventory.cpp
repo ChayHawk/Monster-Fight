@@ -13,10 +13,35 @@ using std::vector;
 using std::max;
 using std::numeric_limits;
 using std::streamsize;
+using std::distance;
+using std::pair;
+using std::make_pair;
+
+bool operator==(const Item& lhs, const Item& rhs)
+{
+    return lhs.GetName() == rhs.GetName();
+}
+
+bool operator!=(const Item& lhs, const Item& rhs)
+{
+    return lhs.GetName() != rhs.GetName();
+}
 
 void Inventory::Add(Item& item, int amount)
 {
-	mInventory.push_back(std::make_pair(item, amount));
+	vector<pair<Item, int>>::iterator itr = find(mInventory.begin(), mInventory.end(), item.GetName());
+
+    int index = distance(mInventory.begin(), itr);
+
+    if (itr != mInventory.end())
+    {
+        cout << "Found " << item.GetName() << " in vector, at index: " << index << " which is the #" << index + 1 << " spot in the vector." << endl;
+    }
+    else
+    {
+        cout << "Did not find " << item.GetName() << " in vector, so it was added." << endl;
+        mInventory.push_back(std::make_pair(item, amount));
+    }
 }
 
 void Inventory::Open()
