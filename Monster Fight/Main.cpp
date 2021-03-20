@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.35.0
+// Version          : 0.36.1
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 1,156
+// Lines of Code    : 1,200
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -241,7 +241,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.35.0 - 1,156 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.36.1 - 1,200 Lines of Code\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
@@ -281,12 +281,8 @@ int main()
             
                 cin >> attackChoice;
 
-                cout << "ITEM RARITY: " << itemRarity << endl;
-
                 //Call generator to re-randomize
 				generator();
-
-				cout << "ITEM RARITY: " << itemRarity << endl;
 
 				//=================================================================================================
                 //See if attack missed and if not, then
@@ -446,6 +442,8 @@ int main()
                 break;
             case 4:
                 cout << "Functionality not working." << endl;
+                //cout << "Functionality unstable." << endl;
+                //Load();
 
                 break;
             case 5:
@@ -486,7 +484,9 @@ void Save(Player& Hero, Inventory& inventory)
         save << i.first << " " << i.second << endl;
     }
 }
-
+//TO DO
+//Create a way to get the values for the players inventory.
+//Create setters to set loaded values.
 vector<int> Load()
 {
     vector<int> loadedData(6);
@@ -498,6 +498,22 @@ vector<int> Load()
     load >> loadedData[2];
     load >> loadedData[3];
     load >> loadedData[4];
+
+	for (auto& i : loadedData)
+    {
+        load >> i >> i;
+    }
+
+    cout << loadedData[0] << endl;
+    cout << loadedData[1] << endl;
+    cout << loadedData[2] << endl;
+    cout << loadedData[3] << endl;
+    cout << loadedData[4] << endl;
+
+	for (auto& i : loadedData)
+    {
+        cout << i << endl;
+    }
 
 	return loadedData;
 }

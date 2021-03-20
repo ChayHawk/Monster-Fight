@@ -1,12 +1,6 @@
-69
-645
-4762
-5
-Super Potion 4
-Weak Potion 2
-Weak Potion 1
-Weak Potion 0
-Super Potion 2
-Strong Potion 2
-Weak Potion 2
+100
+0
+01
+0
 Weak Potion 3
+Super Potion 4

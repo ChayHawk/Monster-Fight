@@ -13,10 +13,34 @@ using std::vector;
 using std::max;
 using std::numeric_limits;
 using std::streamsize;
+using std::distance;
+using std::pair;
+using std::make_pair;
 
 void Inventory::Add(Item& item, int amount)
 {
-	mInventory.push_back(std::make_pair(item, amount));
+	std::string name = item.GetName();
+
+    vector<pair<Item, int>>::iterator itr = find_if(mInventory.begin(), mInventory.end(), 
+                                            [name](const std::pair<Item, int> & p)
+                                            {  
+                                                return p.first.GetName() == name; 
+                                            }); 
+
+    int index = distance(mInventory.begin(), itr);
+
+    //If we find an item that already exists in the vector, then just add to
+    //the current amount owned, and if not then push back the item and the amount.
+    if (itr != mInventory.end())
+    {
+        //cout << "Found " << item.GetName() << " in vector, at index: " << index << " which is the #" << index + 1 << " spot in the vector." << endl;
+        IncrementItemsOwned(amount, index + 1);
+    }
+    else
+    {
+        //cout << "Did not find " << item.GetName() << " in vector, so it was added." << endl;
+        mInventory.push_back(std::make_pair(item, amount));
+    }
 }
 
 void Inventory::Open()
