@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.36.1
+// Version          : 0.37.1
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 1,200
+// Lines of Code    : 1,146
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -17,7 +17,6 @@
 #include <vector>
 #include <random>
 #include <limits>
-#include <fstream>
 
 #include "Player.h"
 #include "Inventory.h"
@@ -39,8 +38,6 @@ using std::cin;
 using std::numeric_limits;
 using std::streamsize;
 using std::getline;
-using std::ofstream;
-using std::ifstream;
 
 //=================================================================================================
 //Use a struct to define constructor object variables so we dont have magic numbers and each number 
@@ -71,8 +68,7 @@ struct UserInterface
 
 
 int RandomNumber(default_random_engine generator, int first, int second);
-void Save(Player& Hero, Inventory& inventory);
-vector<int> Load();
+void GameInfo();
 
 
 int main()
@@ -127,7 +123,7 @@ int main()
 
 	Player Hero
     (
-        "Disaster Chief",
+        "Hero",
         init.health = 100,
         init.maxHealth = 100,
         init.money = 0,
@@ -241,14 +237,13 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.36.1 - 1,200 Lines of Code\n" << endl;
+        cout << "Monster Fight Version 0.37.1\n" << endl;
         cout << "What would you like to do?\n" << endl;
 
         cout << "1) Fight" << endl;
         cout << "2) Heal" << endl;
-        cout << "3) Save" << endl;
-        cout << "4) Load" << endl;
-        cout << "5) Quit" << endl;
+        cout << "3) View Game Info" << endl;
+        cout << "4) Quit" << endl;
 
         cout << "\n> ";
         cin >> choice;
@@ -436,17 +431,10 @@ int main()
 
                 break;
             case 3:
-                cout << "\nGame Saved\n" << endl;
-                Save(Hero, PlayerInventory);
+                GameInfo();
 
                 break;
             case 4:
-                cout << "Functionality not working." << endl;
-                //cout << "Functionality unstable." << endl;
-                //Load();
-
-                break;
-            case 5:
                 cout << "\n\nGoodbye\n\n" << endl;
 
 				return 0;
@@ -467,55 +455,6 @@ int RandomNumber(default_random_engine generator, int first, int second)
     uniform_int_distribution<int> randomNum(first, second);
 
     return randomNum(generator);
-}
-
-void Save(Player& Hero, Inventory& inventory)
-{
-    ofstream save("monster fight.txt");
-
-    save << Hero.GetHealth() << endl;
-	save << Hero.GetMoney() << endl;
-    save << Hero.GetCurrentExperience();
-	save << Hero.GetLevel() << endl;
-    save << Hero.GetKillCount() << endl;
-
-    for (auto& i : inventory.GetInventory())
-    {
-        save << i.first << " " << i.second << endl;
-    }
-}
-//TO DO
-//Create a way to get the values for the players inventory.
-//Create setters to set loaded values.
-vector<int> Load()
-{
-    vector<int> loadedData(6);
-
-    ifstream load("monster fight.txt");
-
-    load >> loadedData[0];
-    load >> loadedData[1];
-    load >> loadedData[2];
-    load >> loadedData[3];
-    load >> loadedData[4];
-
-	for (auto& i : loadedData)
-    {
-        load >> i >> i;
-    }
-
-    cout << loadedData[0] << endl;
-    cout << loadedData[1] << endl;
-    cout << loadedData[2] << endl;
-    cout << loadedData[3] << endl;
-    cout << loadedData[4] << endl;
-
-	for (auto& i : loadedData)
-    {
-        cout << i << endl;
-    }
-
-	return loadedData;
 }
 
 void UserInterface::DisplayAttackMenu(Player& Hero)
@@ -547,4 +486,11 @@ void UserInterface::DisplayPlayerStats(Player& Hero)
     cout << Hero.GetName() << "'s Gold:       " << Hero.GetMoney() << endl;
     cout << Hero.GetName() << "'s Experience: " << Hero.GetCurrentExperience() << "/" << Hero.CalculateExperience() << endl;
     cout << Hero.GetName() << "'s Level:      " << Hero.GetLevel() << "/" << Hero.GetMaxLevel() << endl;
+}
+
+void GameInfo()
+{
+    cout << "Created by: Chay Hawk" << endl;
+    cout << "Lines of code: 1,146" << endl;
+    cout << "Created on: 3/7/2021 @ 4:27 AM" << endl;
 }

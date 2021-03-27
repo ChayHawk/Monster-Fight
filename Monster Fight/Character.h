@@ -35,7 +35,7 @@ class Character
 
         friend std::ostream& operator<<(std::ostream& os, const Character& character);
 
-    //Protected because we dont want the user to create Characters, we want them to create players.
+    //Protected because we dont want the user to create Characters, we want them to create players and enemies.
     protected:
         Character
         (
