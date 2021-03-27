@@ -123,7 +123,7 @@ int main()
 
 	Player Hero
     (
-        "Disaster Chief",
+        "Hero",
         init.health = 100,
         init.maxHealth = 100,
         init.money = 0,
