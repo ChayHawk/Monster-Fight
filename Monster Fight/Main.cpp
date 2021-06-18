@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.42.0
+// Version          : 0.43.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 1,230
+// Lines of Code    : 1,233
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -135,8 +135,6 @@ int main()
     Hero.GiveAttack(BodySlam);
     Hero.GiveAttack(Slash);
 
-    Hero.SetName();
-
     //=================================================================================================
     //CREATE ENEMIES
     //=================================================================================================
@@ -240,7 +238,10 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.42.0\n\n";
+        cout << "Monster Fight Version 0.43.0\n\n";
+
+		Hero.SetName();
+
         cout << "What would you like to do?\n\n";
 
         cout << "1) Fight\n";
@@ -515,6 +516,6 @@ void UserInterface::DrawGUI(int length, char gui, bool hasNewline, int newLineAm
 void GameInfo()
 {
     cout << "Created by: Chay Hawk\n";
-    cout << "Lines of code: 1,230\n";
+    cout << "Lines of code: 1,233\n";
     cout << "Created on: 3/7/2021 @ 4:27 AM\n";
 }
