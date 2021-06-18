@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.37.1
+// Version          : 0.38.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 1,146
+// Lines of Code    : 1,152
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -242,7 +242,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.37.1\n\n";
+        cout << "Monster Fight Version 0.38.0\n\n";
         cout << "What would you like to do?\n\n";
 
         cout << "1) Fight\n";
@@ -497,6 +497,6 @@ void UserInterface::DisplayPlayerStats(Player& Hero)
 void GameInfo()
 {
     cout << "Created by: Chay Hawk\n";
-    cout << "Lines of code: 1,146\n";
+    cout << "Lines of code: 1,152\n";
     cout << "Created on: 3/7/2021 @ 4:27 AM\n";
 }
