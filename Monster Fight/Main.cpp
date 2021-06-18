@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.38.0
+// Version          : 0.41.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 1,152
+// Lines of Code    : 1,234
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -60,6 +60,20 @@ struct UserInterface
 {
 	void DisplayAttackMenu(Player& Hero);
     void DisplayPlayerStats(Player& Hero);
+    void DrawGUI(int length, char gui, bool hasNewline, int newLineAmount)
+    {
+        for (int i = 0; i < length; ++i)
+        {
+            cout << gui;
+        }
+		if (hasNewline == true)
+        {
+            for (int i = 0; i < newLineAmount; ++i)
+            {
+				cout << '\n';
+            }
+        }
+    }
 
     int turn{ 1 };
     int totalTurns{ 1 };
@@ -135,6 +149,8 @@ int main()
     Hero.GiveAttack(BodySlam);
     Hero.GiveAttack(Slash);
 
+    Hero.SetName();
+
     //=================================================================================================
     //CREATE ENEMIES
     //=================================================================================================
@@ -191,6 +207,7 @@ int main()
     int choice{ 0 };
     const int attackHitChance{ 8 }; //80% chance
 
+    //todo Make a struct for this
 	const int common = 100;
     const int uncommon = 30;
     const int rare = 10;
@@ -198,11 +215,6 @@ int main()
 
 	PlayerInventory.Add(WeakPotion, 3);
     PlayerInventory.Add(SuperPotion, 4);
-
-    string gui(60, '#');
-	string gui2(20, ' ');
-	string gui3(60, '-');
-	string gui4(60, '=');
 
     while (choice != -1)
     {
@@ -242,7 +254,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.38.0\n\n";
+        cout << "Monster Fight Version 0.41.0\n\n";
         cout << "What would you like to do?\n\n";
 
         cout << "1) Fight\n";
@@ -268,9 +280,11 @@ int main()
 
             while (Hero.GetHealth() > 0)
             {
-                cout << '\n' << gui << '\n';
-                cout << gui2 << "MONSTER FIGHT" << gui2 << '\n';
-                cout << '\n' << gui << '\n';
+                UI.DrawGUI(60, '#', true, 1);
+				UI.DrawGUI(20, ' ', false, 0);
+                cout << "MONSTER FIGHT";
+				UI.DrawGUI(0, ' ', true, 1);
+                UI.DrawGUI(60, '#', true, 1);
 
                 //=================================================================================================
                 //Player chooses Attack
@@ -286,8 +300,7 @@ int main()
 				generator();
 
 				//=================================================================================================
-                //See if attack missed and if not, then
-                //use an attack.
+                //See if attack missed and if not, then use an attack.
                 //=================================================================================================
 
                 if(RandomNumber(generator, 0, attackHitChance) == 0)
@@ -296,7 +309,8 @@ int main()
                 }
                 else
                 {
-					cout << "\nACTION" << gui3 << '\n';
+                    cout << "\nACTION";
+                    UI.DrawGUI(54, '-', true, 1);
 					cout << Hero.GetName() << " used " << Hero.GetAttackList()[attackChoice -1].GetName() 
                          << " against the " << enemyRoster[randomEnemy].GetName() << ", it does " 
                          << Hero.GetAttackList()[attackChoice -1].GetPower() << " damage.\n";
@@ -347,7 +361,9 @@ int main()
 
                     Hero.IncrememntKillCounter();
 
-                    cout << '\n' << gui4 << '\n';
+                    cout << '\n';
+
+					UI.DrawGUI(60, '=', true, 1);
                     break;
                 }
 
@@ -385,9 +401,9 @@ int main()
 
                 if (Hero.GetHealth() <= 0)
                 {
-                    cout << enemyRoster[randomEnemy].GetName() << " defeated " << Hero.GetName() << '\n';
+                    cout << enemyRoster[randomEnemy].GetName() << " defeated " << Hero.GetName() << "\n\n";
 
-                    cout << '\n' << gui4 << "\n\n";
+					UI.DrawGUI(60, ' ', true, 3);
 
                     cout << "\nGAME OVER\n\n";
 
@@ -398,15 +414,16 @@ int main()
                 //Display players stats
                 //=================================================================================================
 
-                cout << "\nSTATS" << gui4 << '\n';
+                cout << "\nSTATS";
+				UI.DrawGUI(55, '-', true, 1);
 
                 UI.DisplayPlayerStats(Hero);
 
                 cout << '\n' << enemyRoster[randomEnemy].GetName() << "\n\n";
 
-                cout << enemyRoster[randomEnemy].GetName() << "'s Health: " << enemyRoster[randomEnemy].GetHealth() << '\n';
+                cout << enemyRoster[randomEnemy].GetName() << "'s Health: " << enemyRoster[randomEnemy].GetHealth() << "\n\n";
 
-                cout << '\n' << gui4 << "\n\n";
+				UI.DrawGUI(60, '=', true, 2);
 
                 cout << "What Now?\n\n";
 
@@ -497,6 +514,6 @@ void UserInterface::DisplayPlayerStats(Player& Hero)
 void GameInfo()
 {
     cout << "Created by: Chay Hawk\n";
-    cout << "Lines of code: 1,152\n";
+    cout << "Lines of code: 1,234\n";
     cout << "Created on: 3/7/2021 @ 4:27 AM\n";
 }
