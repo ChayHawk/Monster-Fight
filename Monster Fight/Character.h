@@ -51,8 +51,9 @@ class Character
         {}
         Character() = default;
 
+		std::string mName{ "Character Name" };
+
     private:
-        std::string mName{ "Character Name" };
         int mHealth{ 100 };
         std::vector<Attack> mAttackList{ 0 };
         Item item;

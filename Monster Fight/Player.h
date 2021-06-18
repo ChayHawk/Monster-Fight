@@ -43,6 +43,8 @@ class Player : public Character
 
         int CalculateExperience();
 
+        void SetName();
+
         friend std::ostream& operator<<(std::ostream& os, const Player& player);
 
     private:
