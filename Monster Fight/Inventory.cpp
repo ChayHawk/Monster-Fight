@@ -6,7 +6,6 @@
 #include "Player.h"
 
 using std::cout;
-using std::endl;
 using std::cin;
 using std::string;
 using std::vector;
@@ -80,17 +79,17 @@ void Inventory::UseItem(Player& Hero)
     {
 		if (GetInventory().size() == 0)
         {
-            cout << "You do not have any items to use." << endl;
+            cout << "You do not have any items to use.\n";
             choice = -1;
         }
         else
         {
-			cout << "\n################################################################" << endl;
-            cout << "                          INVENTORY                        " << endl;
-            cout << "################################################################" << endl;
+			cout << "\n################################################################\n";
+            cout << "                          INVENTORY                        \n";
+            cout << "################################################################\n";
 
-			cout << "What item do you want to use? Type -1 to quit\n" << endl;
-			cout << Hero.GetName() << "'s current health is: " << Hero.GetHealth() << "\n" << endl;
+			cout << "What item do you want to use? Type -1 to quit\n\n";
+			cout << Hero.GetName() << "'s current health is: " << Hero.GetHealth() << "\n\n";
 
             counter = 1;
 
@@ -100,7 +99,7 @@ void Inventory::UseItem(Player& Hero)
 
             for (auto& i : GetInventory())
             {
-                cout << counter++ << ") " << i.first.GetName() << " (" << i.second << ")" << " Effect: " << i.first.GetEffect() << endl;
+                cout << counter++ << ") " << i.first.GetName() << " (" << i.second << ")" << " Effect: " << i.first.GetEffect() << '\n';
             }
 
             cin >> choice;
@@ -118,34 +117,34 @@ void Inventory::UseItem(Player& Hero)
             {
 				if (!cin.fail() && choice < GetInventory().size() + 1)
                 {
+					//Create an index variable to make things a little easier to read.
+                    int index = choice - 1;
+
 				    //If amount of items owned is greater than 0, and health is not full
-                    if (mInventory[choice -1].second > 0 && Hero.GetHealth() != Hero.GetMaxHealth())
+                    if (mInventory[index].second > 0 && Hero.GetHealth() != Hero.GetMaxHealth())
                     {
                         DecrementItemsOwned(1, choice);
-                        Hero.Heal(mInventory[choice -1].first.GetEffect());
-                        cout << "\n" << Hero.GetName() << "'s health restored to " << Hero.GetHealth() << "\n" << endl;
-
-                        //Create an index variable to make things a little easier to read.
-                        int index = choice - 1;
+                        Hero.Heal(mInventory[index].first.GetEffect());
+                        cout << "\n" << Hero.GetName() << "'s health restored to " << Hero.GetHealth() << "\n\n";
 
                         //Remove item from inventory if there is no more of it.
-                        if (mInventory[choice -1].second == 0)
+                        if (mInventory[index].second == 0)
                         {
                             GetInventory().erase(GetInventory().begin() + index);
                         }
                     }
                     else if (Hero.GetHealth() == Hero.GetMaxHealth())
                     {
-                        cout << "\nYou are already at full health.\n" << endl;
+                        cout << "\nYou are already at full health.\n\n";
                     }
                     else
                     {
-                        cout << "\nYou do not have enough " << mInventory[choice].first.GetName() << "'s" << " to use\n\n" << endl;
+                        cout << "\nYou do not have enough " << mInventory[choice].first.GetName() << "'s" << " to use\n\n";
                     }
                 }
                 else
                 {
-                    cout << "Error, Invalid Input" << endl;
+                    cout << "Error, Invalid Input\n";
 			        cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 }       

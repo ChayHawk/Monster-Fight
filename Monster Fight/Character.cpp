@@ -5,7 +5,6 @@
 #include "Character.h"
 
 using std::cout;
-using std::endl;
 using std::cin;
 using std::ostream;
 using std::string;
@@ -75,8 +74,8 @@ vector<Attack>& Character::GetAttackList()
 
 ostream& operator<<(ostream& os, const Character& character)
 {
-    os << character.GetName() << endl;
-    os << character.GetHealth() << endl;
+    os << character.GetName() << '\n';
+    os << character.GetHealth() << '\n';
 
     return os;
 }

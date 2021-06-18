@@ -5,7 +5,6 @@
 
 using std::cout;
 using std::cin;
-using std::endl;
 using std::ostream;
 using std::string;
 using std::vector;
@@ -131,8 +130,8 @@ void Player::SetName()
 
 ostream& operator<<(ostream& os, const Player& player)
 {
-    os << player.GetMoney() << endl;
-    os << player.GetCurrentExperience() << endl;
+    os << player.GetMoney() << '\n';
+    os << player.GetCurrentExperience() << '\n';
 
     os << static_cast<const Character&>(player);
 
