@@ -103,8 +103,17 @@ void Player::SetName()
 					cout << "Ok, now you're really pissing me off.\n\n";
                     break;
 
-                case 5:
-                    cout << "Clearly, you're an asshole, so i'm done arguing with you.\n\n";
+				case 5:
+					cout << "Last warning, ENTER A NAME!!!.\n\n";
+                    break;
+
+                case 6:
+                    cout << "Clearly, you're an asshole, so you know what? your name is asshole now!\n\n";
+
+                    mName = "Asshole";
+					cout << "\nWelcome " << mName << "!\n\n";
+                    nameIsValid = true;
+
                     break;
 
                 default:
