@@ -5,9 +5,9 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.41.0
+// Version          : 0.42.0
 // Date and Time    : 3/7/2021 @ 4:27 AM
-// Lines of Code    : 1,234
+// Lines of Code    : 1,230
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -27,7 +27,6 @@
 
 
 using std::cout;
-using std::endl;
 using std::string;
 using std::ostream;
 using std::vector;
@@ -60,20 +59,7 @@ struct UserInterface
 {
 	void DisplayAttackMenu(Player& Hero);
     void DisplayPlayerStats(Player& Hero);
-    void DrawGUI(int length, char gui, bool hasNewline, int newLineAmount)
-    {
-        for (int i = 0; i < length; ++i)
-        {
-            cout << gui;
-        }
-		if (hasNewline == true)
-        {
-            for (int i = 0; i < newLineAmount; ++i)
-            {
-				cout << '\n';
-            }
-        }
-    }
+    void DrawGUI(int length, char gui, bool hasNewline, int newLineAmount);
 
     int turn{ 1 };
     int totalTurns{ 1 };
@@ -254,7 +240,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        cout << "Monster Fight Version 0.41.0\n\n";
+        cout << "Monster Fight Version 0.42.0\n\n";
         cout << "What would you like to do?\n\n";
 
         cout << "1) Fight\n";
@@ -511,9 +497,24 @@ void UserInterface::DisplayPlayerStats(Player& Hero)
     cout << Hero.GetName() << "'s Level:      " << Hero.GetLevel() << "/" << Hero.GetMaxLevel() << '\n';
 }
 
+void UserInterface::DrawGUI(int length, char gui, bool hasNewline, int newLineAmount)
+{
+    for (int i = 0; i < length; ++i)
+    {
+        cout << gui;
+    }
+	if (hasNewline == true)
+    {
+        for (int i = 0; i < newLineAmount; ++i)
+        {
+			cout << '\n';
+        }
+    }
+}
+
 void GameInfo()
 {
     cout << "Created by: Chay Hawk\n";
-    cout << "Lines of code: 1,234\n";
+    cout << "Lines of code: 1,230\n";
     cout << "Created on: 3/7/2021 @ 4:27 AM\n";
 }
