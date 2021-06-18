@@ -59,20 +59,7 @@ struct UserInterface
 {
 	void DisplayAttackMenu(Player& Hero);
     void DisplayPlayerStats(Player& Hero);
-    void DrawGUI(int length, char gui, bool hasNewline, int newLineAmount)
-    {
-        for (int i = 0; i < length; ++i)
-        {
-            cout << gui;
-        }
-		if (hasNewline == true)
-        {
-            for (int i = 0; i < newLineAmount; ++i)
-            {
-				cout << '\n';
-            }
-        }
-    }
+    void DrawGUI(int length, char gui, bool hasNewline, int newLineAmount);
 
     int turn{ 1 };
     int totalTurns{ 1 };
@@ -508,6 +495,21 @@ void UserInterface::DisplayPlayerStats(Player& Hero)
     cout << Hero.GetName() << "'s Gold:       " << Hero.GetMoney() << '\n';
     cout << Hero.GetName() << "'s Experience: " << Hero.GetCurrentExperience() << "/" << Hero.CalculateExperience() << '\n';
     cout << Hero.GetName() << "'s Level:      " << Hero.GetLevel() << "/" << Hero.GetMaxLevel() << '\n';
+}
+
+void UserInterface::DrawGUI(int length, char gui, bool hasNewline, int newLineAmount)
+{
+    for (int i = 0; i < length; ++i)
+    {
+        cout << gui;
+    }
+	if (hasNewline == true)
+    {
+        for (int i = 0; i < newLineAmount; ++i)
+        {
+			cout << '\n';
+        }
+    }
 }
 
 void GameInfo()
