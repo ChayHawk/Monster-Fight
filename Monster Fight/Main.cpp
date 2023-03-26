@@ -1,12 +1,8 @@
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
-
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.43.0
-// Date and Time    : 3/7/2021 @ 4:27 AM
+// Version          : 0.43.1
+// Date and Time    : March 26th 2023 @ 1:17 PM
 // Lines of Code    : 1,233
 // Description      : Game where you battle random monsters
 //============================================================================
@@ -57,7 +53,7 @@ struct Init
 
 struct UserInterface
 {
-	void DisplayAttackMenu(Player& Hero);
+    void DisplayAttackMenu(Player& Hero);
     void DisplayPlayerStats(Player& Hero);
     void DrawGUI(int length, char gui, bool hasNewline, int newLineAmount);
 
@@ -76,7 +72,7 @@ int main()
     Init init;
     UserInterface UI;
 
-	//=================================================================================================
+    //=================================================================================================
     //INITIALIZE OUR CODE USED FOR RANDOMIZATION
     //=================================================================================================
 
@@ -87,30 +83,30 @@ int main()
     //CREATE ATTACKS AND SET VECTORS
     //=================================================================================================
 
-    Attack Punch   ("Punch",     init.attackPower = 3);
-    Attack Kick    ("Kick",      init.attackPower = 1);
-    Attack Slash   ("Slash",     init.attackPower = 2);
+    Attack Punch("Punch", init.attackPower = 3);
+    Attack Kick("Kick", init.attackPower = 1);
+    Attack Slash("Slash", init.attackPower = 2);
     Attack BodySlam("Body Slam", init.attackPower = 4);
 
     //=================================================================================================
     //CREATE ITEMS AND SET VECTOR
     //=================================================================================================
 
-    Item WeakPotion  ("Weak Potion",   init.effect = 10);
+    Item WeakPotion("Weak Potion", init.effect = 10);
     Item StrongPotion("Strong Potion", init.effect = 20);
-    Item SuperPotion ("Super Potion",  init.effect = 35);
-    Item UltraPotion ("Ultra Potion",  init.effect = 50);
-    Item MaxPotion   ("Max Potion",    init.effect = 100);
+    Item SuperPotion("Super Potion", init.effect = 35);
+    Item UltraPotion("Ultra Potion", init.effect = 50);
+    Item MaxPotion("Max Potion", init.effect = 100);
 
     vector<Item> itemList;
 
-    itemList.push_back(WeakPotion); 
-    itemList.push_back(StrongPotion); 
-    itemList.push_back(SuperPotion); 
-    itemList.push_back(UltraPotion); 
-    itemList.push_back(MaxPotion); 
+    itemList.push_back(WeakPotion);
+    itemList.push_back(StrongPotion);
+    itemList.push_back(SuperPotion);
+    itemList.push_back(UltraPotion);
+    itemList.push_back(MaxPotion);
 
-	//=================================================================================================
+    //=================================================================================================
     //CREATE INVENTOIRIES
     //=================================================================================================
 
@@ -121,13 +117,13 @@ int main()
     //INSTANTIATE PLAYER CONSTRUCTOR
     //=================================================================================================
 
-	Player Hero
+    Player Hero
     (
         "Hero",
         init.health = 100,
         init.maxHealth = 100,
         init.money = 0,
-        init.experience = 0, 
+        init.experience = 0,
         init.level = 1
     );
 
@@ -139,24 +135,24 @@ int main()
     //CREATE ENEMIES
     //=================================================================================================
 
-    Enemy Dragon  ("Dragon",    init.health = 10, init.maxHealth = 70, init.xpToGive = 40, init.money = 0);
-    Enemy Skeleton("Skeleton",  init.health = 10, init.maxHealth = 10, init.xpToGive = 20, init.money = 0);
-    Enemy Troll   ("Troll",     init.health = 25, init.maxHealth = 25, init.xpToGive = 30, init.money = 0);
+    Enemy Dragon("Dragon", init.health = 10, init.maxHealth = 70, init.xpToGive = 40, init.money = 0);
+    Enemy Skeleton("Skeleton", init.health = 10, init.maxHealth = 10, init.xpToGive = 20, init.money = 0);
+    Enemy Troll("Troll", init.health = 25, init.maxHealth = 25, init.xpToGive = 30, init.money = 0);
     Enemy GiantRat("Giant Rat", init.health = 15, init.maxHealth = 15, init.xpToGive = 25, init.money = 0);
-    Enemy Raptor  ("Raptor",    init.health = 35, init.maxHealth = 35, init.xpToGive = 15, init.money = 0);
+    Enemy Raptor("Raptor", init.health = 35, init.maxHealth = 35, init.xpToGive = 15, init.money = 0);
 
-	//=================================================================================================
+    //=================================================================================================
     //SET ENEMY ATTACKS
     //=================================================================================================
 
     Dragon.GiveAttack(Punch);
-	Dragon.GiveAttack(BodySlam);
+    Dragon.GiveAttack(BodySlam);
 
     Skeleton.GiveAttack(Punch);
     Skeleton.GiveAttack(BodySlam);
     Skeleton.GiveAttack(Slash);
 
-	Troll.GiveAttack(Punch);
+    Troll.GiveAttack(Punch);
     Troll.GiveAttack(BodySlam);
     Troll.GiveAttack(Slash);
 
@@ -166,9 +162,9 @@ int main()
     Raptor.GiveAttack(BodySlam);
     Raptor.GiveAttack(Slash);
     Raptor.GiveAttack(Kick);
-	Raptor.GiveAttack(Kick);
+    Raptor.GiveAttack(Kick);
 
-	//=================================================================================================
+    //=================================================================================================
     //SET ENEMIES IN CONTAINER FOR RANDOMIZATION
     // 
     // Had an error where these were before the SetAttackList function and attacks were not setting, 
@@ -176,7 +172,7 @@ int main()
     // attacks set to them so their attack sizes would always be 0.
     //=================================================================================================
 
-	vector<Enemy> enemyRoster;
+    vector<Enemy> enemyRoster;
 
     enemyRoster.push_back(Dragon);
     enemyRoster.push_back(Skeleton);
@@ -184,7 +180,7 @@ int main()
     enemyRoster.push_back(GiantRat);
     enemyRoster.push_back(Raptor);
 
-	//=================================================================================================
+    //=================================================================================================
     //INITIALIZE SOME THINGS
     //=================================================================================================
 
@@ -192,19 +188,19 @@ int main()
     const int attackHitChance{ 8 }; //80% chance
 
     //todo Make a struct for this
-	const int common = 100;
-    const int uncommon = 30;
-    const int rare = 10;
+    const int common{ 100 };
+    const int uncommon{ 30 };
+    const int rare{ 10 };
     int itemRarity{ 0 };
 
-	PlayerInventory.Add(WeakPotion, 3);
+    PlayerInventory.Add(WeakPotion, 3);
     PlayerInventory.Add(SuperPotion, 4);
 
     while (choice != -1)
     {
         choice = 0;
 
-		//=================================================================================================
+        //=================================================================================================
         //SET ENEMY ATTACKS
         // 
         //Here we randomly choose an enemy and an item to give and set it to the item list
@@ -213,7 +209,7 @@ int main()
         //we only want them to fight 1 enemy per battle, then when the enemy is
         //defeated the program returns here where a new enemy and new item are randomly
         //chosen for the next battle. The same is done for money and XP as well.
-		//=================================================================================================
+        //=================================================================================================
 
         size_t randomEnemy = RandomNumber(generator, 0, enemyRoster.size() - 1);
         enemyRoster[randomEnemy];
@@ -225,7 +221,7 @@ int main()
         //Select a random item to give to the player upon enemies defeat.
         size_t randomItem = RandomNumber(generator, 0, itemList.size() - 1);
         itemList[randomItem];
-        
+
         //Randomize money amount to give to player
         enemyRoster[randomEnemy].GiveMoney(RandomNumber(generator, 10, 100));
 
@@ -240,7 +236,7 @@ int main()
 
         cout << "Monster Fight Version 0.43.0\n\n";
 
-		Hero.SetName();
+        Hero.SetName();
 
         cout << "What would you like to do?\n\n";
 
@@ -268,9 +264,9 @@ int main()
             while (Hero.GetHealth() > 0)
             {
                 UI.DrawGUI(60, '#', true, 1);
-				UI.DrawGUI(20, ' ', false, 0);
+                UI.DrawGUI(20, ' ', false, 0);
                 cout << "MONSTER FIGHT";
-				UI.DrawGUI(0, ' ', true, 1);
+                UI.DrawGUI(0, ' ', true, 1);
                 UI.DrawGUI(60, '#', true, 1);
 
                 //=================================================================================================
@@ -280,17 +276,17 @@ int main()
                 int attackChoice{ 0 };
 
                 UI.DisplayAttackMenu(Hero);
-            
+
                 cin >> attackChoice;
 
                 //Call generator to re-randomize
-				generator();
+                generator();
 
-				//=================================================================================================
+                //=================================================================================================
                 //See if attack missed and if not, then use an attack.
                 //=================================================================================================
 
-                if(RandomNumber(generator, 0, attackHitChance) == 0)
+                if (RandomNumber(generator, 0, attackHitChance) == 0)
                 {
                     cout << Hero.GetName() << "'s attack missed!\n\n";
                 }
@@ -298,14 +294,14 @@ int main()
                 {
                     cout << "\nACTION";
                     UI.DrawGUI(54, '-', true, 1);
-					cout << Hero.GetName() << " used " << Hero.GetAttackList()[attackChoice -1].GetName() 
-                         << " against the " << enemyRoster[randomEnemy].GetName() << ", it does " 
-                         << Hero.GetAttackList()[attackChoice -1].GetPower() << " damage.\n";
+                    cout << Hero.GetName() << " used " << Hero.GetAttackList()[attackChoice - 1].GetName()
+                        << " against the " << enemyRoster[randomEnemy].GetName() << ", it does "
+                        << Hero.GetAttackList()[attackChoice - 1].GetPower() << " damage.\n";
 
-					enemyRoster[randomEnemy].TakeDamage(Hero.GetAttackList()[attackChoice -1].GetPower());
+                    enemyRoster[randomEnemy].TakeDamage(Hero.GetAttackList()[attackChoice - 1].GetPower());
                 }
 
-				//=================================================================================================
+                //=================================================================================================
                 //Check to see if enemy is dead and if so
                 //then give player money, xp, and items
                 //=================================================================================================
@@ -317,7 +313,7 @@ int main()
 
                     Hero.GiveExperience(enemyRoster[randomEnemy].GetXpToGive());
 
-                    cout << enemyRoster[randomEnemy].GetXpToGive() <<  " experience.\n\n";
+                    cout << enemyRoster[randomEnemy].GetXpToGive() << " experience.\n\n";
 
                     Hero.LevelUp();
                     Hero.GiveMoney(enemyRoster[randomEnemy].GetMoney());
@@ -325,7 +321,7 @@ int main()
                     cout << enemyRoster[randomEnemy].GetName() << " dropped " << RandomNumber(generator, 1, 3)
                         << " " << itemList[randomItem].GetName() << "'s.\n";
 
-					//Randomize Item given based on rarity
+                    //Randomize Item given based on rarity
                     //TO DO: Make functions of each rarity with
                     //options to choose rarity level.
 
@@ -333,13 +329,13 @@ int main()
                     {
                         PlayerInventory.Add(WeakPotion, RandomNumber(generator, 1, 7));
                     }
-		            if (itemRarity > rare && itemRarity <= uncommon)
+                    if (itemRarity > rare && itemRarity <= uncommon)
                     {
-						PlayerInventory.Add(StrongPotion, RandomNumber(generator, 1, 4));
+                        PlayerInventory.Add(StrongPotion, RandomNumber(generator, 1, 4));
                     }
-		            if (itemRarity <= rare)
+                    if (itemRarity <= rare)
                     {
-						PlayerInventory.Add(SuperPotion, RandomNumber(generator, 1, 2));
+                        PlayerInventory.Add(SuperPotion, RandomNumber(generator, 1, 2));
                     }
 
                     //PlayerInventory.Add(itemList[randomItem], RandomNumber(generator, 1, 3));
@@ -350,17 +346,17 @@ int main()
 
                     cout << '\n';
 
-					UI.DrawGUI(60, '=', true, 1);
+                    UI.DrawGUI(60, '=', true, 1);
                     break;
                 }
 
-				//=================================================================================================
+                //=================================================================================================
                 //Randomly Choose enemy Attack
                 //=================================================================================================
 
-				generator();
+                generator();
 
-                if(RandomNumber(generator, 0, attackHitChance) == 0)
+                if (RandomNumber(generator, 0, attackHitChance) == 0)
                 {
                     cout << enemyRoster[randomEnemy].GetName() << "'s attack missed!\n";
                 }
@@ -372,16 +368,16 @@ int main()
                     }
                     else
                     {
-						cout << enemyRoster[randomEnemy].GetName() << " uses " 
-                             << enemyRoster[randomEnemy].GetAttackList()[RandomNumber(generator, 0, enemyRoster[randomEnemy].GetAttackList().size() - 1)].GetName();
+                        cout << enemyRoster[randomEnemy].GetName() << " uses "
+                            << enemyRoster[randomEnemy].GetAttackList()[RandomNumber(generator, 0, enemyRoster[randomEnemy].GetAttackList().size() - 1)].GetName();
                         cout << " against " << Hero.GetName() << ", and it does ";
                         cout << enemyRoster[randomEnemy].GetAttackList()[RandomNumber(generator, 0, enemyRoster[randomEnemy].GetAttackList().size() - 1)].GetPower() << " damage!\n\n";
 
-					    Hero.TakeDamage(enemyRoster[randomEnemy].GetAttackList()[RandomNumber(generator, 0, enemyRoster[randomEnemy].GetAttackList().size() - 1)].GetPower());
+                        Hero.TakeDamage(enemyRoster[randomEnemy].GetAttackList()[RandomNumber(generator, 0, enemyRoster[randomEnemy].GetAttackList().size() - 1)].GetPower());
                     }
                 }
 
-				//=================================================================================================
+                //=================================================================================================
                 //Check if player is dead, and if so, end
                 //the game.
                 //=================================================================================================
@@ -390,19 +386,19 @@ int main()
                 {
                     cout << enemyRoster[randomEnemy].GetName() << " defeated " << Hero.GetName() << "\n\n";
 
-					UI.DrawGUI(60, ' ', true, 3);
+                    UI.DrawGUI(60, ' ', true, 3);
 
                     cout << "\nGAME OVER\n\n";
 
                     return 0;
                 }
 
-				//=================================================================================================
+                //=================================================================================================
                 //Display players stats
                 //=================================================================================================
 
                 cout << "\nSTATS";
-				UI.DrawGUI(55, '-', true, 1);
+                UI.DrawGUI(55, '-', true, 1);
 
                 UI.DisplayPlayerStats(Hero);
 
@@ -410,7 +406,7 @@ int main()
 
                 cout << enemyRoster[randomEnemy].GetName() << "'s Health: " << enemyRoster[randomEnemy].GetHealth() << "\n\n";
 
-				UI.DrawGUI(60, '=', true, 2);
+                UI.DrawGUI(60, '=', true, 2);
 
                 cout << "What Now?\n\n";
 
@@ -420,40 +416,40 @@ int main()
 
                 switch (choice)
                 {
-                    case 1:
-						continue;
-                        break;
-                    case 2:
-                        PlayerInventory.UseItem(Hero);
-                        break;
-                    default:
-						cout << "\nInvalid Decision.\n\n";
-                        cin.clear(); //Clear failure state
-                        cin.ignore(numeric_limits<streamsize>::max(), '\n'); //discard bad characters
+                case 1:
+                    continue;
+                    break;
+                case 2:
+                    PlayerInventory.UseItem(Hero);
+                    break;
+                default:
+                    cout << "\nInvalid Decision.\n\n";
+                    cin.clear(); //Clear failure state
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); //discard bad characters
                 }
 
                 cin.get();
             }
-                break;
+            break;
 
-            case 2:
-				PlayerInventory.UseItem(Hero);
+        case 2:
+            PlayerInventory.UseItem(Hero);
 
-                break;
-            case 3:
-                GameInfo();
+            break;
+        case 3:
+            GameInfo();
 
-                break;
-            case 4:
-                cout << "\n\nGoodbye\n\n\n";
+            break;
+        case 4:
+            cout << "\n\nGoodbye\n\n\n";
 
-				return 0;
-                break;
+            return 0;
+            break;
 
-            default:
-                cout << "\nInvalid Decision, please enter an integer or valid integer choice.\n\n";
-                cin.clear(); //Clear failure state
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); //discard bad characters
+        default:
+            cout << "\nInvalid Decision, please enter an integer or valid integer choice.\n\n";
+            cin.clear(); //Clear failure state
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); //discard bad characters
         }
     }
 
@@ -469,11 +465,11 @@ int RandomNumber(default_random_engine generator, int first, int second)
 
 void UserInterface::DisplayAttackMenu(Player& Hero)
 {
-	int counter{ 1 };
-                
+    int counter{ 1 };
+
     cout << "\nUse what attack?\n\n";
 
-	for (auto& i : Hero.GetAttackList())
+    for (auto& i : Hero.GetAttackList())
     {
         if (Hero.GetAttackList().empty())
         {
@@ -481,14 +477,14 @@ void UserInterface::DisplayAttackMenu(Player& Hero)
         }
         else
         {
-			cout << counter++ << ") " << i << '\n';
+            cout << counter++ << ") " << i << '\n';
         }
     }
 }
 
 void UserInterface::DisplayPlayerStats(Player& Hero)
 {
-	cout << "\nCurrent Turn: " << turn++ << " | Total Turns: " << totalTurns++ << " | Battles Won: " << battles << " | Enemies Defeated: " << Hero.GetKillCount() << "\n\n";
+    cout << "\nCurrent Turn: " << turn++ << " | Total Turns: " << totalTurns++ << " | Battles Won: " << battles << " | Enemies Defeated: " << Hero.GetKillCount() << "\n\n";
 
     cout << Hero.GetName() << "\n\n";
 
@@ -504,11 +500,11 @@ void UserInterface::DrawGUI(int length, char gui, bool hasNewline, int newLineAm
     {
         cout << gui;
     }
-	if (hasNewline == true)
+    if (hasNewline == true)
     {
         for (int i = 0; i < newLineAmount; ++i)
         {
-			cout << '\n';
+            cout << '\n';
         }
     }
 }
