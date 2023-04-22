@@ -1,3 +1,7 @@
+// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
@@ -66,17 +70,6 @@ int main()
 
     std::mt19937 mt(static_cast<int>(std::chrono::high_resolution_clock::now().time_since_epoch().count()));
 
-    std::cout << RandomNumber(mt, 1, 90) << '\n';
-    std::cout << RandomNumber(mt, 1, 90) << '\n';
-    std::cout << RandomNumber(mt, 1, 90) << '\n';
-    std::cout << RandomNumber(mt, 1, 90) << '\n';
-    std::cout << RandomNumber(mt, 1, 90) << '\n';
-    std::cout << RandomNumber(mt, 1, 90) << '\n';
-    std::cout << RandomNumber(mt, 1, 90) << '\n';
-    std::cout << RandomNumber(mt, 1, 90) << '\n';
-    std::cout << RandomNumber(mt, 1, 90) << '\n';
-    std::cout << RandomNumber(mt, 1, 90) << '\n';
-
     //=================================================================================================
     //CREATE ATTACKS AND SET std::vectorS
     //=================================================================================================
@@ -133,11 +126,11 @@ int main()
     //CREATE ENEMIES
     //=================================================================================================
 
-    Enemy Dragon("Dragon", init.health = 10, init.maxHealth = 70, init.xpToGive = 40, init.money = 0);
-    Enemy Skeleton("Skeleton", init.health = 10, init.maxHealth = 10, init.xpToGive = 20, init.money = 0);
-    Enemy Troll("Troll", init.health = 25, init.maxHealth = 25, init.xpToGive = 30, init.money = 0);
+    Enemy Dragon  ("Dragon",    init.health = 10, init.maxHealth = 70, init.xpToGive = 40, init.money = 0);
+    Enemy Skeleton("Skeleton",  init.health = 10, init.maxHealth = 10, init.xpToGive = 20, init.money = 0);
+    Enemy Troll   ("Troll",     init.health = 25, init.maxHealth = 25, init.xpToGive = 30, init.money = 0);
     Enemy GiantRat("Giant Rat", init.health = 15, init.maxHealth = 15, init.xpToGive = 25, init.money = 0);
-    Enemy Raptor("Raptor", init.health = 35, init.maxHealth = 35, init.xpToGive = 15, init.money = 0);
+    Enemy Raptor  ("Raptor",    init.health = 35, init.maxHealth = 35, init.xpToGive = 15, init.money = 0);
 
     //=================================================================================================
     //SET ENEMY ATTACKS
@@ -510,6 +503,6 @@ void UserInterface::DrawGUI(int length, char gui, bool hasNewline, int newLineAm
 void GameInfo()
 {
     std::cout << "Created by: Chay Hawk\n";
-    std::cout << "Lines of code: 1,233\n";
+    std::cout << "Lines of code: 1,266\n";
     std::cout << "Created on: 3/7/2021 @ 4:27 AM\n";
 }
