@@ -5,7 +5,7 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.44.0
+// Version          : 0.45.0
 // Date and Time    : April 22nd 2023 @ 2:15 AM
 // Lines of Code    : 1,266
 // Description      : Game where you battle random monsters
@@ -225,7 +225,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        std::cout << "Monster Fight Version 0.43.0\n\n";
+        std::cout << "Monster Fight Version 0.45.0\n\n";
 
         Hero.SetName();
 
