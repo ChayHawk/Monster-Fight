@@ -5,7 +5,7 @@
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.45.0
+// Version          : 0.46.0
 // Date and Time    : April 22nd 2023 @ 2:15 AM
 // Lines of Code    : 1,266
 // Description      : Game where you battle random monsters
@@ -74,20 +74,20 @@ int main()
     //CREATE ATTACKS AND SET std::vectorS
     //=================================================================================================
 
-    Attack Punch("Punch", init.attackPower = 3);
-    Attack Kick("Kick", init.attackPower = 1);
-    Attack Slash("Slash", init.attackPower = 2);
+    Attack Punch   ("Punch",     init.attackPower = 3);
+    Attack Kick    ("Kick",      init.attackPower = 1);
+    Attack Slash   ("Slash",     init.attackPower = 2);
     Attack BodySlam("Body Slam", init.attackPower = 4);
 
     //=================================================================================================
     //CREATE ITEMS AND SET std::vector
     //=================================================================================================
 
-    Item WeakPotion("Weak Potion", init.effect = 10);
+    Item WeakPotion  ("Weak Potion",   init.effect = 10);
     Item StrongPotion("Strong Potion", init.effect = 20);
-    Item SuperPotion("Super Potion", init.effect = 35);
-    Item UltraPotion("Ultra Potion", init.effect = 50);
-    Item MaxPotion("Max Potion", init.effect = 100);
+    Item SuperPotion ("Super Potion",  init.effect = 35);
+    Item UltraPotion ("Ultra Potion",  init.effect = 50);
+    Item MaxPotion   ("Max Potion",    init.effect = 100);
 
     std::vector<Item> itemList;
 
@@ -179,10 +179,10 @@ int main()
     const int attackHitChance{ 8 }; //80% chance
 
     //todo Make a struct for this
-    const int common{ 100 };
+    const int common  { 100 };
     const int uncommon{ 30 };
-    const int rare{ 10 };
-    int itemRarity{ 0 };
+    const int rare    { 10 };
+    int itemRarity    { 0 };
 
     PlayerInventory.Add(WeakPotion, 3);
     PlayerInventory.Add(SuperPotion, 4);
@@ -225,7 +225,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        std::cout << "Monster Fight Version 0.45.0\n\n";
+        std::cout << "Monster Fight Version 0.46.0\n\n";
 
         Hero.SetName();
 
