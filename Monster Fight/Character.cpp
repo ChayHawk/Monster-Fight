@@ -53,6 +53,37 @@ int Character::GetMoney() const
     return mMoney; 
 }
 
+void Character::AddItemToInventory(Item& item, int amount)
+{
+    mInventory.Add(item, amount);
+}
+
+
+
+void Character::OpenInventory()
+{
+
+}
+
+
+void Character::ClearInventory()
+{
+
+}
+
+void Character::UseInventoryItem()
+{
+
+}
+
+std::vector<std::pair<Item, int>>& Character::GetInventory()
+{
+    return mInventory.GetInventory();
+}
+
+
+
+
 void Character::TakeDamage(int amount)
 {
     mHealth -= amount;

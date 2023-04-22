@@ -29,7 +29,6 @@ class Inventory
 
 		std::vector<std::pair<Item, int>>& GetInventory();
 
-
 	private:
 		std::vector<std::pair<Item, int>> mInventory{ 0 };
 		int mItemsOwned{ 0 };

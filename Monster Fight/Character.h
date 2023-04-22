@@ -28,6 +28,12 @@ class Character
 		void GiveMoney(int amount);
         int GetMoney() const;
 
+        void AddItemToInventory(Item& item, int amount);
+        void OpenInventory();
+        void ClearInventory();
+        void UseInventoryItem();
+        std::vector<std::pair<Item, int>>& GetInventory();
+
         void TakeDamage(int amount);
 
         void GiveAttack(Attack& attack);
@@ -53,10 +59,13 @@ class Character
 
 		std::string mName{ "Character Name" };
 
+    protected:
+        Inventory mInventory;
+
     private:
         int mHealth{ 100 };
         std::vector<Attack> mAttackList{ 0 };
-        Item item;
+        Item mItem;
         int mMoney{ 10 };
 
 		const int MAX_HEALTH{ 100 };

@@ -20,8 +20,8 @@ void Inventory::Add(Item& item, int amount)
 {
 	std::string name = item.GetName();
 
-    vector<pair<Item, int>>::iterator itr = find_if(mInventory.begin(), mInventory.end(), 
-                                            [name](const std::pair<Item, int> & p)
+    auto itr = find_if(mInventory.begin(), mInventory.end(), 
+                                            [name](const std::pair<Item, int>& p)
                                             {  
                                                 return p.first.GetName() == name; 
                                             }); 
