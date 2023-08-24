@@ -1,7 +1,3 @@
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: http://www.viva64.com
-
 #include "Inventory.h"
 #include "Player.h"
 
@@ -18,13 +14,12 @@ using std::make_pair;
 
 void Inventory::Add(Item& item, int amount)
 {
-	std::string name = item.GetName();
+    auto compareItemNames = [&item](const std::pair<Item, int>& p)
+    {
+        return p.first.GetName() == item.GetName();
+    };
 
-    auto itr = find_if(mInventory.begin(), mInventory.end(), 
-                                            [name](const std::pair<Item, int>& p)
-                                            {  
-                                                return p.first.GetName() == name; 
-                                            }); 
+    auto itr = find_if(mInventory.begin(), mInventory.end(), compareItemNames);
 
     int index = distance(mInventory.begin(), itr);
 

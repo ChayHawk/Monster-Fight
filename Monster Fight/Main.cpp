@@ -1,13 +1,9 @@
-// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
-
 //============================================================================
 // Name             : Monster Fight
 // Author           : Chay Hawk
-// Version          : 0.46.0
+// Version          : 0.46.1
 // Date and Time    : April 22nd 2023 @ 2:15 AM
-// Lines of Code    : 1,266
+// Lines of Code    : 1,210
 // Description      : Game where you battle random monsters
 //============================================================================
 
@@ -80,7 +76,7 @@ int main()
     Attack BodySlam("Body Slam", init.attackPower = 4);
 
     //=================================================================================================
-    //CREATE ITEMS AND SET std::vector
+    //CREATE ITEMS AND SET STD::VECTOR
     //=================================================================================================
 
     Item WeakPotion  ("Weak Potion",   init.effect = 10);
@@ -225,7 +221,7 @@ int main()
         //MAIN GAME
         //=================================================================================================
 
-        std::cout << "Monster Fight Version 0.46.0\n\n";
+        std::cout << "Monster Fight Version 0.46.1\n\n";
 
         Hero.SetName();
 
@@ -503,6 +499,6 @@ void UserInterface::DrawGUI(int length, char gui, bool hasNewline, int newLineAm
 void GameInfo()
 {
     std::cout << "Created by: Chay Hawk\n";
-    std::cout << "Lines of code: 1,266\n";
+    std::cout << "Lines of code: 1,210\n";
     std::cout << "Created on: 3/7/2021 @ 4:27 AM\n";
 }
