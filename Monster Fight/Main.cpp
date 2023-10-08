@@ -14,6 +14,7 @@
 #include <random>
 #include <chrono>
 #include <limits>
+#include <format>
 
 #include "Player.h"
 #include "Inventory.h"
@@ -21,6 +22,12 @@
 #include "Enemy.h"
 #include "Item.h"
 #include "Attack.h"
+
+//=================================================================================================
+//BUGS
+// 
+// After fighting, the player is asked to re enter their name.
+//=================================================================================================
 
 //=================================================================================================
 //Use a struct to define constructor object variables so we dont have magic numbers and each number 
@@ -43,7 +50,6 @@ struct UserInterface
 {
     void DisplayAttackMenu(Player& Hero);
     void DisplayPlayerStats(Player& Hero);
-    void DrawGUI(int length, char gui, bool hasNewline, int newLineAmount);
 
     int turn{ 1 };
     int totalTurns{ 1 };
@@ -250,11 +256,9 @@ int main()
 
             while (Hero.GetHealth() > 0)
             {
-                UI.DrawGUI(60, '#', true, 1);
-                UI.DrawGUI(20, ' ', false, 0);
-                std::cout << "MONSTER FIGHT";
-                UI.DrawGUI(0, ' ', true, 1);
-                UI.DrawGUI(60, '#', true, 1);
+                std::cout << std::format("{:#<60}", '#') << '\n';
+                std::cout << std::format("{:^60}", "MONSTER FIGHT") << '\n';
+                std::cout << std::format("{:#<60}", '#') << '\n';
 
                 //=================================================================================================
                 //Player chooses Attack
@@ -266,9 +270,6 @@ int main()
 
                 std::cin >> attackChoice;
 
-                //Call generator to re-randomize
-                mt();
-
                 //=================================================================================================
                 //See if attack missed and if not, then use an attack.
                 //=================================================================================================
@@ -279,8 +280,8 @@ int main()
                 }
                 else
                 {
-                    std::cout << "\nACTION";
-                    UI.DrawGUI(54, '-', true, 1);
+                    std::cout << std::format("{:-^85}", "ACTION") << "\n\n";
+
                     std::cout << Hero.GetName() << " used " << Hero.GetAttackList()[attackChoice - 1].GetName()
                         << " against the " << enemyRoster[randomEnemy].GetName() << ", it does "
                         << Hero.GetAttackList()[attackChoice - 1].GetPower() << " damage.\n";
@@ -333,15 +334,13 @@ int main()
 
                     std::cout << '\n';
 
-                    UI.DrawGUI(60, '=', true, 1);
+                    std::cout << std::format("{:=<60}", '=') << "\n";
                     break;
                 }
 
                 //=================================================================================================
                 //Randomly Choose enemy Attack
                 //=================================================================================================
-
-                mt();
 
                 if (RandomNumber(mt, 0, attackHitChance) == 0)
                 {
@@ -373,7 +372,7 @@ int main()
                 {
                     std::cout << enemyRoster[randomEnemy].GetName() << " defeated " << Hero.GetName() << "\n\n";
 
-                    UI.DrawGUI(60, ' ', true, 3);
+                    std::cout << "\n\n\n";
 
                     std::cout << "\nGAME OVER\n\n";
 
@@ -384,8 +383,7 @@ int main()
                 //Display players stats
                 //=================================================================================================
 
-                std::cout << "\nSTATS";
-                UI.DrawGUI(55, '-', true, 1);
+                std::cout << std::format("{:-^85}", "STATS") << '\n';
 
                 UI.DisplayPlayerStats(Hero);
 
@@ -393,7 +391,7 @@ int main()
 
                 std::cout << enemyRoster[randomEnemy].GetName() << "'s Health: " << enemyRoster[randomEnemy].GetHealth() << "\n\n";
 
-                UI.DrawGUI(60, '=', true, 2);
+                std::cout << std::format("{:=<60}", '=') << "\n\n";
 
                 std::cout << "What Now?\n\n";
 
@@ -456,7 +454,9 @@ void UserInterface::DisplayAttackMenu(Player& Hero)
 
     std::cout << "\nUse what attack?\n\n";
 
-    for (auto& i : Hero.GetAttackList())
+    std::cout << std::format("{} {:7}Power", "Attack", ' ') << '\n';
+
+    for (const auto& attacks : Hero.GetAttackList())
     {
         if (Hero.GetAttackList().empty())
         {
@@ -464,14 +464,14 @@ void UserInterface::DisplayAttackMenu(Player& Hero)
         }
         else
         {
-            std::cout << counter++ << ") " << i << '\n';
+            std::cout << std::format("{}) {:10} {}", counter++, attacks.GetName(), attacks.GetPower()) << '\n';
         }
     }
 }
 
 void UserInterface::DisplayPlayerStats(Player& Hero)
 {
-    std::cout << "\nCurrent Turn: " << turn++ << " | Total Turns: " << totalTurns++ << " | Battles Won: " << battles << " | Enemies Defeated: " << Hero.GetKillCount() << "\n\n";
+    std::cout << std::format("Current Turn: {} | Total Turns: {} | Battles Won: {} | Enemies Defeated: {}", turn++, totalTurns++, battles, Hero.GetKillCount()) << '\n';
 
     std::cout << Hero.GetName() << "\n\n";
 
@@ -479,21 +479,6 @@ void UserInterface::DisplayPlayerStats(Player& Hero)
     std::cout << Hero.GetName() << "'s Gold:       " << Hero.GetMoney() << '\n';
     std::cout << Hero.GetName() << "'s Experience: " << Hero.GetCurrentExperience() << "/" << Hero.CalculateExperience() << '\n';
     std::cout << Hero.GetName() << "'s Level:      " << Hero.GetLevel() << "/" << Hero.GetMaxLevel() << '\n';
-}
-
-void UserInterface::DrawGUI(int length, char gui, bool hasNewline, int newLineAmount)
-{
-    for (int i = 0; i < length; ++i)
-    {
-        std::cout << gui;
-    }
-    if (hasNewline == true)
-    {
-        for (int i = 0; i < newLineAmount; ++i)
-        {
-            std::cout << '\n';
-        }
-    }
 }
 
 void GameInfo()
