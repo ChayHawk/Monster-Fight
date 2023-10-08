@@ -205,7 +205,6 @@ int main()
         //=================================================================================================
 
         size_t randomEnemy = RandomNumber(mt, 0, enemyRoster.size() - 1);
-        enemyRoster[randomEnemy];
 
         //Set enemies health back to its max. If we dont do this, next time we encounter an enemy
         //we defeated, it will have no health left.
@@ -213,7 +212,6 @@ int main()
 
         //Select a random item to give to the player upon enemies defeat.
         size_t randomItem = RandomNumber(mt, 0, itemList.size() - 1);
-        itemList[randomItem];
 
         //Randomize money amount to give to player
         enemyRoster[randomEnemy].GiveMoney(RandomNumber(mt, 10, 100));

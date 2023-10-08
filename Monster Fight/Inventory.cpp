@@ -23,25 +23,21 @@ void Inventory::Add(Item& item, int amount)
 
     int index = distance(mInventory.begin(), itr);
 
-    //If we find an item that already exists in the vector, then just add to
-    //the current amount owned, and if not then push back the item and the amount.
     if (itr != mInventory.end())
     {
-        //cout << "Found " << item.GetName() << " in vector, at index: " << index << " which is the #" << index + 1 << " spot in the vector." << endl;
         IncrementItemsOwned(amount, index + 1);
     }
     else
     {
-        //cout << "Did not find " << item.GetName() << " in vector, so it was added." << endl;
         mInventory.push_back(std::make_pair(item, amount));
     }
 }
 
 void Inventory::Open()
 {
-	for (auto& i : mInventory)
+	for (auto& [name, amount] : mInventory)
 	{
-		cout << i.first.GetName() << "(" << i.second << ")";
+		cout << name << "(" << amount << ")";
 	}
 }
 
@@ -57,7 +53,7 @@ vector<std::pair<Item, int>>& Inventory::GetInventory()
 
 void Inventory::DecrementItemsOwned(int amount, int index) 
 { 
-    mInventory[index -1].second -= amount;
+    mInventory[index - 1].second -= amount;
 }
 
 void Inventory::IncrementItemsOwned(int amount, int index)
@@ -79,6 +75,8 @@ void Inventory::UseItem(Player& Hero)
         }
         else
         {
+            //TODO
+            //Use std::format with this
 			cout << "\n################################################################\n";
             cout << "                          INVENTORY                        \n";
             cout << "################################################################\n";
@@ -92,9 +90,9 @@ void Inventory::UseItem(Player& Hero)
             //DISPLAY INVENTORY
             //=================================================================================================
 
-            for (auto& i : GetInventory())
+            for (auto& [name, amount] : GetInventory())
             {
-                cout << counter++ << ") " << i.first.GetName() << " (" << i.second << ")" << " Effect: " << i.first.GetEffect() << '\n';
+                cout << counter++ << ") " << name << " (" << amount << ")" << " Effect: " << name.GetEffect() << '\n';
             }
 
             cin >> choice;
